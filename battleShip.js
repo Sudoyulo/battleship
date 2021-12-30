@@ -10,13 +10,42 @@ const generateBoard = (shipLocations) => {
   }
 
   for (let ship in shipLocations) {
-    for (let location of shipLocations[ship]) {
-      board[location[0]][location[1]] = ship.toUpperCase();
+    if (ship.length === 1) {
+      for (let location of shipLocations[ship]) {
+        if (shipLocations.damaged.indexOf(location) >= 0) {
+          console.log("HIT");
+          board[location[0]][location[1]] = "🛑";
+        } else if (location[0] !== undefined) {
+          board[location[0]][location[1]] = ship.toUpperCase();
+        }
+      }
     }
+  }
+
+  for (let miss of shipLocations.missed) {
+    console.log("miss?", miss);
+    board[miss[0]][miss[1]] = "🌍";
   }
 
   return board;
 };
+
+const attackTarget = (target, strike) => {
+
+  for (let ship in target) {
+    for (let location of target[ship]) {
+      // console.log(location, strike);
+      if (location === strike) {
+        target.damaged.push(location);
+        return target;
+      }
+    }
+  }
+  
+  target.missed.push(strike);
+  return target;
+};
+
 
 let player = {
   c: ["","","","",""],
@@ -32,9 +61,17 @@ let opponent = {
   k: ["20","21","22"],
   s: ["30","31","32"],
   d: ["40","41"],
+  damaged: [],
+  missed: [],
 };
 
+let playerGuess = ["00","01","62","03","04"]
+
+for (let guess of playerGuess) {
+  opponent = attackTarget(opponent, guess);
+}
 let g = generateBoard(opponent);
 console.log(util.inspect(g, { compact: true }));
+console.log(opponent)
 
 // console.log(opponent.c[1][0]);
