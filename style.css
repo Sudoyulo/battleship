@@ -1,0 +1,50 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#scoreboard {
+  background-color: lightblue;
+  height: 20vh;
+  width: 67vw;
+  margin: 10px;
+  padding:10px;
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+}
+
+.names {
+  display: flex;
+  justify-content:space-between;
+}
+
+p {
+  margin: 2px;
+}
+
+#ship-container{
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#hits {
+  display: flex;
+  justify-content: space-between; 
+  margin: 2px;
+}
+
+#body-container {
+  display: flex;
+  justify-content: center;
+  background-color: gainsboro;
+  height: 70vh;
+  width: 70vw;
+}

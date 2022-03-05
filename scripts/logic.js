@@ -42,23 +42,20 @@ const generateBoard = (shipLocations) => {
   return board;
 };
 
-const attackTarget = (name, target, strike) => {
-
-  let map = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  let coords = map[strike[0]] + strike[1];
+const attackTarget = (target, strike) => {
 
   for (let ship in target) {
     for (let location of target[ship]) {
       // console.log(location, strike);
       if (location === strike) {
-        console.log(name, "Hit at ", coords);
+        console.log("Hit at ", strike)
         target.damaged.push(location);
         return target;
       }
     }
   }
-  
-  console.log(name,"Missed at ", coords);
+
+  console.log("Missed at ", strike);
   target.missed.push(strike);
   return target;
 };
@@ -91,36 +88,36 @@ const displayRemainder = (commander) => {
 
 
 let player = {
-  c: ["","","","",""],
-  b: ["","","",""],
-  k: ["","",""],
-  s: ["","",""],
-  d: ["",""],
+  c: ["", "", "", "", ""],
+  b: ["", "", "", ""],
+  k: ["", "", ""],
+  s: ["", "", ""],
+  d: ["", ""],
   name: "player",
   damaged: [],
   missed: [],
 };
 
 let opponent = {
-  c: ["00","01","02","03","04"],
-  b: ["10","11","12","13"],
-  k: ["20","21","22"],
-  s: ["30","31","32"],
-  d: ["40","41"],
+  c: ["00", "01", "02", "03", "04"],
+  b: ["10", "11", "12", "13"],
+  k: ["20", "21", "22"],
+  s: ["30", "31", "32"],
+  d: ["40", "41"],
   name: "com",
   damaged: [],
   missed: [],
 };
 
-let playerGuess = ["00","01","62","03","04"];
+let playerGuess = ["00", "01", "62", "03", "04"];
 let attackSpot = "13";
 
 for (let guess of playerGuess) {
-  opponent = attackTarget(player.name, opponent, guess);
+  opponent = attackTarget(opponent, guess);
   // let pBoard = generateBoard(opponent);
   // console.log(util.inspect(pBoard, { compact: true }));
 }
-opponent = attackTarget(player.name, opponent, attackSpot);
+opponent = attackTarget(opponent, attackSpot);
 
 let pBoard = generateBoard(opponent);
 let oBoard = generateBoard(player);
