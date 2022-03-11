@@ -42,9 +42,14 @@ p {
 }
 
 #body-container {
-  display: flex;
-  justify-content: center;
+
   background-color: gainsboro;
   height: 70vh;
   width: 70vw;
+}
+
+#grocery-aisle {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
 }
