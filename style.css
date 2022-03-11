@@ -50,6 +50,15 @@ p {
 
 #grocery-aisle {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center; 
   border: 1px solid black;
+}
+
+td {
+  height: 9vh;
+  width: 9vh;
+  background-color: aqua;
+  border: 1 dotted pink;
 }

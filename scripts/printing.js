@@ -3,7 +3,7 @@
 $(() => {
   $("#hit-me").click(buttonPress);
   // $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
-  generateBoard(6)
+  generateBoard(4)
 });
 
 const buttonPress = () => {
