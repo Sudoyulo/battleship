@@ -15,11 +15,11 @@ const generateBoard = (size) => {
   const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 
   for (let i = 0; i < size; i++) {
-    $("#grocery-aisle").after("<tr></tr>")
+    $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
     for (let j = 0; j < size; j++) {
-      $("#grocery-aisle").after('<td>' + alphabet[i] + String(j) + '</td>')
-      // board[i].push([alphabet[i] + String(j)])
+      $("#row" + i).append('<td>' + alphabet[i] + String(j) + '</td>')
     }
+
   }
   console.log(board)
 
