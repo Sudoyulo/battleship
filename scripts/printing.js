@@ -2,24 +2,25 @@
 
 $(() => {
   $("#hit-me").click(buttonPress);
-  $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
+  // $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
+  generateBoard(6)
 });
 
 const buttonPress = () => {
   console.log("button pushed")
 }
 
-const generateBoard = (row, col) => {
+const generateBoard = (size) => {
 
-  board = [];
-  for (let i = 0; i < row; i++) {
-    board.push(i);
-    for (let j = 0; j < col; j++) {
-      board[i].push(j)
+  const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
+
+  for (let i = 0; i < size; i++) {
+    $("#grocery-aisle").after("<tr></tr>")
+    for (let j = 0; j < size; j++) {
+      $("#grocery-aisle").after('<td>' + alphabet[i] + String(j) + '</td>')
+      // board[i].push([alphabet[i] + String(j)])
     }
   }
   console.log(board)
 
 }
-
-generateBoard(3, 3);
