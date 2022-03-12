@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 
 $(function () {
   newGameOptions()
@@ -9,6 +8,7 @@ $(function () {
   $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
+const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 
 let placedLocation = [];
 let veggieSizes = [5, 4, 3, 3];
@@ -34,8 +34,6 @@ const clearBoard = () => {
 }
 
 const generateBoard = (size) => {
-
-  const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 
   for (let i = 0; i < size; i++) {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
@@ -67,7 +65,7 @@ const mapClickHandler = (e) => {
   let aimCoords = $(e.target).parent().attr('id')
   console.log("aimed at", aimCoords)
 
-  if (setup) {
+  if (setup && !placedLocation.includes(aimCoords)) { //unique
     placedLocation.push(aimCoords)
     console.log(placedLocation)
   }
@@ -82,14 +80,19 @@ const posSetup = () => {
 
 
 const giveGlow = (e) => {
-  let hovering = $(e.target).parent()
-  $(hovering).css({ background: "blue" })
-  console.log($(hovering).next().length)
-  $(hovering).next().css({ background: "blue" })
+  let sameRow = $(e.target).parent().parent().children()
+  // $(hovering).css({ background: "blue" })
+  // console.log($(hovering).next().length)
+  // $(hovering).next().css({ background: "blue" })
+  let clickIndex = $(e.target).parent().index()
+  console.log(sameRow)
+  let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[2])
+  $(nextLocation).css({ background: "blue" })
+
 }
 
 const takeGlow = (e) => {
-  let hovering = $(e.target).parent()
+  let hovering = $(e.target).parent().parent().children()
   $(hovering).css({ background: "gainsboro" })
   $(hovering).next().css({ background: "gainsboro" })
 }
