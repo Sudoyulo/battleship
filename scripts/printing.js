@@ -3,7 +3,7 @@
 $(() => {
   $("#hit-me").click(buttonPress);
   // $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
-  generateBoard(4)
+  generateBoard(7)
 });
 
 const buttonPress = () => {
@@ -21,6 +21,9 @@ const generateBoard = (size) => {
     }
 
   }
+
+  $("td").css("width", 65 / size + "vw")
+  $("td").css("height", 62 / size + "vh")
   console.log(board)
 
 }

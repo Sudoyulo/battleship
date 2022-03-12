@@ -57,8 +57,8 @@ p {
 }
 
 td {
-  height: 9vh;
-  width: 9vh;
-  background-color: aqua;
-  border: 1 dotted pink;
+  padding: 2px;
+  display: inline-grid;
+  justify-content: center;
+  align-items: center;
 }
