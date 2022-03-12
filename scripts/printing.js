@@ -3,7 +3,8 @@
 $(() => {
   $("#hit-me").click(buttonPress);
   // $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
-  generateBoard(7)
+  generateBoard(5)
+  newGameOptions()
 });
 
 const buttonPress = () => {
@@ -19,11 +20,15 @@ const generateBoard = (size) => {
     for (let j = 0; j < size; j++) {
       $("#row" + i).append('<td>' + alphabet[i] + String(j) + '</td>')
     }
-
   }
 
   $("td").css("width", 65 / size + "vw")
   $("td").css("height", 62 / size + "vh")
-  console.log(board)
 
+}
+
+const newGameOptions = () => {
+  for (let i = 4; i < 9; i++) {
+    $("#ng-dropdown").append("<option>" + i + "</option>")
+  }
 }
