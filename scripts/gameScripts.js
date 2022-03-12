@@ -18,8 +18,8 @@ const newGameHandler = (e) => {
   e.preventDefault()
   clearBoard();
 
-  placedLocation = ["A4", "B4"];
-  veggieSizes = [5, 4, 3, 3];
+  placedLocation = [];
+  veggieSizes = [2, 5, 4, 3, 3];
 
   var sizeChosen = $('#ng-dropdown').find(":selected").text();
   generateBoard(sizeChosen)
@@ -63,11 +63,29 @@ const newGameOptions = () => {
 const mapClickHandler = (e) => {
   e.preventDefault()
   let aimCoords = $(e.target).parent().attr('id')
+  let addThis = null;
   console.log("aimed at", aimCoords)
 
-  if (setup && !placedLocation.includes(aimCoords)) { //unique
-    placedLocation.push(aimCoords)
-    console.log(placedLocation)
+  if (setup && !placedLocation.includes(aimCoords)) { //setup
+    let sameRow = $(e.target).parent().parent().children()
+    let clickIndex = $(e.target).parent().index()
+    let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
+
+    // console.log("add", nextLocation.attr('id'))
+    if (nextLocation.length === veggieSizes[0]) { //good size
+      addThis = $(e.target).parent().attr('id')
+
+      for (let i = 0; i < veggieSizes[0]; i++) {
+        placedLocation.push(addThis)
+        addThis = $(sameRow[clickIndex + i + 1]).attr('id')
+      }
+    } else {
+      console.log("too short")
+    }
+
+
+    // placedLocation.push(aimCoords)
+    console.log("all", placedLocation)
   }
 }
 
@@ -85,8 +103,8 @@ const giveGlow = (e) => {
   // console.log($(hovering).next().length)
   // $(hovering).next().css({ background: "blue" })
   let clickIndex = $(e.target).parent().index()
-  console.log(sameRow)
-  let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[2])
+  // console.log(sameRow)
+  let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
   $(nextLocation).css({ background: "blue" })
 
 }
