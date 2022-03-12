@@ -4,6 +4,10 @@ $(function () {
   generateBoard(5);
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
+  // $(".mapPoint").click((e) => mapClickHandler(e, $(this).parent().attr('id')))
+  $(".mapPoint").click((e) => mapClickHandler(e, e.target))
+
+  // $(".mapPoint").click(function (e) { console.log(e.target) })
 
 });
 
@@ -27,17 +31,30 @@ const generateBoard = (size) => {
   for (let i = 0; i < size; i++) {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
     for (let j = 0; j < size; j++) {
-      $("#row" + i).append('<td>' + alphabet[i] + String(j) + '</td>')
+      let locationMarker = alphabet[i] + String(j);
+      $("#row" + i).append('<td id="' + locationMarker + '"><button class="mapPoint" id="' + locationMarker + '"> ? </button></td>')
     }
   }
 
-  $("td").css("width", 62 / size + "vw")
-  $("td").css("height", 62 / size + "vh")
+  $("td").css({
+    width: 62 / size + "vw",
+    height: 62 / size + "vh"
+  })
+  $(".mapPoint").css({
+    width: 31 / size + "vw",
+    height: 31 / size + "vh"
+  })
 
 }
 
 const newGameOptions = () => {
-  for (let i = 4; i < 9; i++) {
+  for (let i = 5; i < 9; i++) {
     $("#ng-dropdown").append("<option>" + i + "</option>")
   }
+}
+
+const mapClickHandler = (e, target) => {
+  e.preventDefault()
+  let aimCoords = $(target).parent().attr('id')
+  console.log("aimed at", aimCoords)
 }
