@@ -1,20 +1,24 @@
 /* eslint-disable no-undef */
 
 $(function () {
-  // generateBoard(5);
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
-  // $(".mapPoint").click((e) => mapClickHandler(e));
+
+  //testing
+  generateBoard(5)
+  $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
 const newGameHandler = (e) => {
   e.preventDefault()
   clearBoard();
-  console.log("cleared")
+
   var sizeChosen = $('#ng-dropdown').find(":selected").text();
   generateBoard(sizeChosen)
   $(".mapPoint").click((e) => mapClickHandler(e));
-  console.log("generated", sizeChosen)
+
+  posSetup()
+
 }
 
 const clearBoard = () => {
@@ -54,4 +58,19 @@ const mapClickHandler = (e) => {
   e.preventDefault()
   let aimCoords = $(e.target).parent().attr('id')
   console.log("aimed at", aimCoords)
+}
+
+const posSetup = () => {
+  $("#message").text("Place your veggies XXXXX")
+  $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow(e) })
+}
+
+const giveGlow = (e) => {
+  let hovering = $(e.target).parent()
+  $(hovering).css({ background: "blue" })
+}
+
+const takeGlow = (e) => {
+  let hovering = $(e.target).parent()
+  $(hovering).css({ background: "gainsboro" })
 }
