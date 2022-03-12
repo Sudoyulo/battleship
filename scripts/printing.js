@@ -1,14 +1,23 @@
 /* eslint-disable no-undef */
 
-$(() => {
-  $("#hit-me").click(buttonPress);
-  // $("#grocery-aisle tr:last").after("<tr><td>22</td></tr>")
-  generateBoard(5)
+$(function () {
+  generateBoard(5);
   newGameOptions()
+  $("#new-game").click((e) => newGameHandler(e));
+
 });
 
-const buttonPress = () => {
-  console.log("button pushed")
+const newGameHandler = (e) => {
+  e.preventDefault()
+  clearBoard();
+  let $gameSize = $("")
+
+  var sizeChosen = $('#ng-dropdown').find(":selected").text();
+  generateBoard(sizeChosen)
+}
+
+const clearBoard = () => {
+  $("#grocery-aisle").empty();
 }
 
 const generateBoard = (size) => {
@@ -22,7 +31,7 @@ const generateBoard = (size) => {
     }
   }
 
-  $("td").css("width", 65 / size + "vw")
+  $("td").css("width", 62 / size + "vw")
   $("td").css("height", 62 / size + "vh")
 
 }
