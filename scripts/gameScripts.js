@@ -4,7 +4,7 @@ $(function () {
   // generateBoard(5);
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
-  $(".mapPoint").click((e) => mapClickHandler(e));
+  // $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
 const newGameHandler = (e) => {
@@ -13,6 +13,7 @@ const newGameHandler = (e) => {
   console.log("cleared")
   var sizeChosen = $('#ng-dropdown').find(":selected").text();
   generateBoard(sizeChosen)
+  $(".mapPoint").click((e) => mapClickHandler(e));
   console.log("generated", sizeChosen)
 }
 
@@ -50,7 +51,7 @@ const newGameOptions = () => {
 }
 
 const mapClickHandler = (e) => {
-  console.log("aimed at", aimCoords)
   e.preventDefault()
   let aimCoords = $(e.target).parent().attr('id')
+  console.log("aimed at", aimCoords)
 }
