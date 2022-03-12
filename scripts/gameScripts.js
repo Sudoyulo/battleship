@@ -64,6 +64,8 @@ const mapClickHandler = (e) => {
   e.preventDefault()
   let aimCoords = $(e.target).parent().attr('id')
   let addThis = null;
+  let addList = [];
+  let keepAdding = true;
   console.log("aimed at", aimCoords)
 
   if (setup && !placedLocation.includes(aimCoords)) { //setup
@@ -76,16 +78,27 @@ const mapClickHandler = (e) => {
       addThis = $(e.target).parent().attr('id')
 
       for (let i = 0; i < veggieSizes[0]; i++) {
-        placedLocation.push(addThis)
+        if (placedLocation.includes(addThis)) {
+          keepAdding = false;
+        }
+        addList.push(addThis)
         addThis = $(sameRow[clickIndex + i + 1]).attr('id')
       }
+      // console.log("ready to add:", addList)
+      if (keepAdding) {
+        placedLocation = placedLocation.concat(addList)
+      } else {
+        console.log("failed to add")
+        keepAdding = true;
+      }
+
     } else {
       console.log("too short")
     }
 
-
-    // placedLocation.push(aimCoords)
     console.log("all", placedLocation)
+  } else {
+    console.log("already included")
   }
 }
 
