@@ -62,15 +62,22 @@ const mapClickHandler = (e) => {
 
 const posSetup = () => {
   $("#message").text("Place your veggies XXXXX")
+
+  let placedLocation = [];
+  let veggieSizes = [5, 4, 3, 3]
   $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow(e) })
 }
+
 
 const giveGlow = (e) => {
   let hovering = $(e.target).parent()
   $(hovering).css({ background: "blue" })
+  console.log($(hovering).next().length)
+  $(hovering).next().css({ background: "blue" })
 }
 
 const takeGlow = (e) => {
   let hovering = $(e.target).parent()
   $(hovering).css({ background: "gainsboro" })
+  $(hovering).next().css({ background: "gainsboro" })
 }
