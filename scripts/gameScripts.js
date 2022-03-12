@@ -1,23 +1,19 @@
 /* eslint-disable no-undef */
 
 $(function () {
-  generateBoard(5);
+  // generateBoard(5);
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
-  // $(".mapPoint").click((e) => mapClickHandler(e, $(this).parent().attr('id')))
-  $(".mapPoint").click((e) => mapClickHandler(e, e.target))
-
-  // $(".mapPoint").click(function (e) { console.log(e.target) })
-
+  $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
 const newGameHandler = (e) => {
   e.preventDefault()
   clearBoard();
-  let $gameSize = $("")
-
+  console.log("cleared")
   var sizeChosen = $('#ng-dropdown').find(":selected").text();
   generateBoard(sizeChosen)
+  console.log("generated", sizeChosen)
 }
 
 const clearBoard = () => {
@@ -32,7 +28,7 @@ const generateBoard = (size) => {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
     for (let j = 0; j < size; j++) {
       let locationMarker = alphabet[i] + String(j);
-      $("#row" + i).append('<td id="' + locationMarker + '"><button class="mapPoint" id="' + locationMarker + '"> ? </button></td>')
+      $("#row" + i).append('<td id="' + locationMarker + '"><button class="mapPoint"> ? </button></td>')
     }
   }
 
@@ -53,8 +49,8 @@ const newGameOptions = () => {
   }
 }
 
-const mapClickHandler = (e, target) => {
-  e.preventDefault()
-  let aimCoords = $(target).parent().attr('id')
+const mapClickHandler = (e) => {
   console.log("aimed at", aimCoords)
+  e.preventDefault()
+  let aimCoords = $(e.target).parent().attr('id')
 }
