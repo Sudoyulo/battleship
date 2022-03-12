@@ -9,9 +9,17 @@ $(function () {
   $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
+
+let placedLocation = [];
+let veggieSizes = [5, 4, 3, 3];
+let setup = false;
+
 const newGameHandler = (e) => {
   e.preventDefault()
   clearBoard();
+
+  placedLocation = ["A4", "B4"];
+  veggieSizes = [5, 4, 3, 3];
 
   var sizeChosen = $('#ng-dropdown').find(":selected").text();
   generateBoard(sizeChosen)
@@ -58,13 +66,17 @@ const mapClickHandler = (e) => {
   e.preventDefault()
   let aimCoords = $(e.target).parent().attr('id')
   console.log("aimed at", aimCoords)
+
+  if (setup) {
+    placedLocation.push(aimCoords)
+    console.log(placedLocation)
+  }
 }
 
 const posSetup = () => {
+  setup = true;
   $("#message").text("Place your veggies XXXXX")
 
-  let placedLocation = [];
-  let veggieSizes = [5, 4, 3, 3]
   $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow(e) })
 }
 
