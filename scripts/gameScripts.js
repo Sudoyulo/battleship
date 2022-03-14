@@ -12,28 +12,28 @@ const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 
 let placedLocation = [];
 let veggieSizes = [5, 4, 3, 3];
-let setup = false;
+let setup = true;
+let gameSize = $('#ng-dropdown').find(":selected").text();
 
 const newGameHandler = (e) => {
   e.preventDefault()
-  clearBoard();
+
 
   placedLocation = [];
   veggieSizes = [2, 5, 4, 3, 3];
 
-  var sizeChosen = $('#ng-dropdown').find(":selected").text();
-  generateBoard(sizeChosen)
+  gameSize = $('#ng-dropdown').find(":selected").text();
+  generateBoard(gameSize)
   $(".mapPoint").click((e) => mapClickHandler(e));
 
   posSetup() //place locations
 
-}
+  generateMiniBoard(gameSize)
 
-const clearBoard = () => {
-  $("#grocery-aisle").empty();
 }
 
 const generateBoard = (size) => {
+  $("#grocery-aisle").empty();
 
   for (let i = 0; i < size; i++) {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
@@ -88,6 +88,7 @@ const mapClickHandler = (e) => {
         veggieSizes.shift()
         if (veggieSizes.length === 0) { setup = false }
         refreshBoard()
+        generateMiniBoard(gameSize)
       } else {
         console.log("failed to add")
         keepAdding = true;
@@ -121,10 +122,34 @@ const takeGlow = () => {
 }
 
 const refreshBoard = () => {
-
   placedLocation.forEach((location) => {
     $("#" + location).html("X").css({ background: "gainsboro" })
+  })
+}
 
+const generateMiniBoard = (size) => {
+  $("#my-field").empty();
+
+  for (let i = 0; i < size; i++) {
+    $("#my-field").append("<tr id=" + "myrow" + i + "></tr>")
+    for (let j = 0; j < size; j++) {
+      let locationMarker = alphabet[i] + String(j);
+      console.log("placed, put", placedLocation, locationMarker)
+      if (placedLocation.includes(locationMarker)) {
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> X </p></td>')
+      } else {
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> - </p></td>')
+      }
+    }
+  }
+
+  $("#myfield-td").css({
+    width: 44 / size + "vw",
+    height: 44 / size + "vh"
+  })
+  $(".mini-map").css({
+    width: 22 / size + "vw",
+    height: 11 / size + "vh"
   })
 
 }
