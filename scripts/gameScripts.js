@@ -25,7 +25,7 @@ const newGameHandler = (e) => {
   generateBoard(sizeChosen)
   $(".mapPoint").click((e) => mapClickHandler(e));
 
-  posSetup()
+  posSetup() //place locations
 
 }
 
@@ -45,11 +45,11 @@ const generateBoard = (size) => {
 
   $("td").css({
     width: 62 / size + "vw",
-    height: 62 / size + "vh"
+    height: 44 / size + "vh"
   })
   $(".mapPoint").css({
     width: 31 / size + "vw",
-    height: 31 / size + "vh"
+    height: 22 / size + "vh"
   })
 
 }
@@ -73,7 +73,6 @@ const mapClickHandler = (e) => {
     let clickIndex = $(e.target).parent().index()
     let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
 
-    // console.log("add", nextLocation.attr('id'))
     if (nextLocation.length === veggieSizes[0]) { //good size
       addThis = $(e.target).parent().attr('id')
 
@@ -84,10 +83,11 @@ const mapClickHandler = (e) => {
         addList.push(addThis)
         addThis = $(sameRow[clickIndex + i + 1]).attr('id')
       }
-      // console.log("ready to add:", addList)
       if (keepAdding) {
         placedLocation = placedLocation.concat(addList)
         veggieSizes.shift()
+        if (veggieSizes.length === 0) { setup = false }
+        refreshBoard()
       } else {
         console.log("failed to add")
         keepAdding = true;
@@ -96,35 +96,35 @@ const mapClickHandler = (e) => {
     } else {
       console.log("too short")
     }
-
     console.log("all", placedLocation)
-  } else {
-    console.log("already included")
-  }
+  } //end
+
+
 }
 
 const posSetup = () => {
   setup = true;
   $("#message").text("Place your veggies XXXXX")
 
-  $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow(e) })
+  $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow() })
 }
-
 
 const giveGlow = (e) => {
   let sameRow = $(e.target).parent().parent().children()
-  // $(hovering).css({ background: "blue" })
-  // console.log($(hovering).next().length)
-  // $(hovering).next().css({ background: "blue" })
   let clickIndex = $(e.target).parent().index()
-  // console.log(sameRow)
   let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
   $(nextLocation).css({ background: "blue" })
-
 }
 
-const takeGlow = (e) => {
-  let hovering = $(e.target).parent().parent().children()
-  $(hovering).css({ background: "gainsboro" })
-  $(hovering).next().css({ background: "gainsboro" })
+const takeGlow = () => {
+  $(".mapPoint").parent().css({ background: "gainsboro" })
+}
+
+const refreshBoard = () => {
+
+  placedLocation.forEach((location) => {
+    $("#" + location).html("X").css({ background: "gainsboro" })
+
+  })
+
 }

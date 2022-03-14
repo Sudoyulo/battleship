@@ -7,7 +7,7 @@ body {
 
 #scoreboard {
   background-color: lightblue;
-  height: 20vh;
+  height: 40vh;
   width: 67vw;
   margin: 10px;
   padding:10px;
@@ -42,9 +42,8 @@ p {
 }
 
 #body-container {
-
   background-color: gainsboro;
-  height: 70vh;
+  height: 50vh;
   width: 70vw;
 }
 
