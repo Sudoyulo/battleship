@@ -87,6 +87,7 @@ const mapClickHandler = (e) => {
       // console.log("ready to add:", addList)
       if (keepAdding) {
         placedLocation = placedLocation.concat(addList)
+        veggieSizes.shift()
       } else {
         console.log("failed to add")
         keepAdding = true;
