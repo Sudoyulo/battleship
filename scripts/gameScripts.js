@@ -33,6 +33,7 @@ const newGameHandler = (e) => {
 
 const generateBoard = (size) => {
   $("#grocery-aisle").empty();
+  $("#my-field").empty();
 
   for (let i = 0; i < size; i++) {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
