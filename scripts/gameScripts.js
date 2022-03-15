@@ -11,7 +11,7 @@ $(function () {
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 
 let placedLocation = [];
-let veggieSizes = [5, 4, 3, 3];
+veggieSizes = [2, 5, 4, 3, 3];
 let setup = true;
 let gameSize = $('#ng-dropdown').find(":selected").text();
 
@@ -86,7 +86,9 @@ const mapClickHandler = (e) => {
       if (keepAdding) {
         placedLocation = placedLocation.concat(addList)
         veggieSizes.shift()
+        $("#message").text(nextSizeMessage)
         if (veggieSizes.length === 0) { setup = false }
+
         refreshBoard()
         generateMiniBoard(gameSize)
       } else {
@@ -100,13 +102,19 @@ const mapClickHandler = (e) => {
     console.log("all", placedLocation)
   } //end
 
+}
+
+const nextSizeMessage = () => {
+  let message = "";
+  if (veggieSizes.length > 0) {
+    message = "Place width:" + veggieSizes[0]
+  }
+  return message;
 
 }
 
 const posSetup = () => {
   setup = true;
-  $("#message").text("Place your veggies XXXXX")
-
   $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow() })
 }
 
