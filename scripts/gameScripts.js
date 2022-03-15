@@ -150,7 +150,7 @@ const generateMiniBoard = (size) => {
       if (placedLocation.includes(locationMarker)) {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + myIcon + ' </p></td>')
       } else {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map">  </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> &nbsp - &nbsp </p></td>')
       }
     }
   }
