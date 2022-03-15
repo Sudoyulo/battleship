@@ -4,15 +4,15 @@ $(function () {
   $("#new-game").click((e) => newGameHandler(e));
 
   //testing
-  generateBoard(5)
-  $(".mapPoint").click((e) => mapClickHandler(e));
+  // generateBoard(5)
+  // $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
 let placedLocation = [];
-veggieSizes = [2, 5, 4, 3, 3];
+veggieSizes = [5, 4, 3, 3];
 let setup = true;
 let gameSize = $('#ng-dropdown').find(":selected").text();
 
@@ -21,15 +21,13 @@ const newGameHandler = (e) => {
 
 
   placedLocation = [];
-  veggieSizes = [2, 5, 4, 3, 3];
+  veggieSizes = [5, 4, 3, 3];
 
   gameSize = $('#ng-dropdown').find(":selected").text();
   generateBoard(gameSize)
   $(".mapPoint").click((e) => mapClickHandler(e));
 
   posSetup() //place locations
-
-  generateMiniBoard(gameSize)
 
 }
 
@@ -88,10 +86,13 @@ const mapClickHandler = (e) => {
         placedLocation = placedLocation.concat(addList)
         veggieSizes.shift()
         $("#message").text(nextSizeMessage)
-        if (veggieSizes.length === 0) { setup = false }
+        if (veggieSizes.length === 0) { //start game chain here
+          setup = false
+          generateMiniBoard(gameSize)
+        }
 
         refreshBoard()
-        generateMiniBoard(gameSize)
+
       } else {
         console.log("failed to add")
         keepAdding = true;
@@ -138,6 +139,7 @@ const refreshBoard = () => {
 
 const generateMiniBoard = (size) => {
   $("#my-field").empty();
+  let myIcon = gameIcons[Math.floor(Math.random() * 4)];
 
   for (let i = 0; i < size; i++) {
     $("#my-field").append("<tr id=" + "myrow" + i + "></tr>")
@@ -145,7 +147,7 @@ const generateMiniBoard = (size) => {
       let locationMarker = alphabet[i] + String(j);
       console.log("placed, put", placedLocation, locationMarker)
       if (placedLocation.includes(locationMarker)) {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + gameIcons[0] + ' </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + myIcon + ' </p></td>')
       } else {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> - </p></td>')
       }
