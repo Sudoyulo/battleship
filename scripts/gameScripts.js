@@ -9,6 +9,7 @@ $(function () {
 });
 
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
+const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
 let placedLocation = [];
 veggieSizes = [2, 5, 4, 3, 3];
@@ -107,7 +108,7 @@ const mapClickHandler = (e) => {
 const nextSizeMessage = () => {
   let message = "";
   if (veggieSizes.length > 0) {
-    message = "Place width:" + veggieSizes[0]
+    message = "Next is width:" + veggieSizes[0]
   }
   return message;
 
@@ -144,7 +145,7 @@ const generateMiniBoard = (size) => {
       let locationMarker = alphabet[i] + String(j);
       console.log("placed, put", placedLocation, locationMarker)
       if (placedLocation.includes(locationMarker)) {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> X </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + gameIcons[0] + ' </p></td>')
       } else {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> - </p></td>')
       }
