@@ -26,6 +26,7 @@ const newGameHandler = (e) => {
   gameSize = $('#ng-dropdown').find(":selected").text();
   generateBoard(gameSize)
   $(".mapPoint").click((e) => mapClickHandler(e));
+  $("#my-field").empty();
 
   posSetup() //place locations
 
@@ -33,7 +34,6 @@ const newGameHandler = (e) => {
 
 const generateBoard = (size) => {
   $("#grocery-aisle").empty();
-  $("#my-field").empty();
 
   for (let i = 0; i < size; i++) {
     $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
@@ -43,7 +43,7 @@ const generateBoard = (size) => {
     }
   }
 
-  $("td").css({
+  $("#grocery-aisle td").css({
     width: 62 / size + "vw",
     height: 44 / size + "vh"
   })
@@ -89,7 +89,8 @@ const mapClickHandler = (e) => {
         $("#message").text(nextSizeMessage)
         if (veggieSizes.length === 0) { //start game chain here
           setup = false
-          generateMiniBoard(gameSize)
+          generateMiniBoard(gameSize);
+          // generateP2Board(gameSize);
         }
 
         refreshBoard()
@@ -113,7 +114,6 @@ const nextSizeMessage = () => {
     message = "Next is width:" + veggieSizes[0]
   }
   return message;
-
 }
 
 const posSetup = () => {
@@ -150,18 +150,23 @@ const generateMiniBoard = (size) => {
       if (placedLocation.includes(locationMarker)) {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + myIcon + ' </p></td>')
       } else {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> - </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map">  </p></td>')
       }
     }
   }
 
   $("#myfield-td").css({
     width: 44 / size + "vw",
-    height: 44 / size + "vh"
+    height: 22 / size + "vh"
   })
   $(".mini-map").css({
     width: 22 / size + "vw",
     height: 11 / size + "vh"
   })
+
+}
+
+const generateP2Board = (size) => {
+  generateBoard(size);
 
 }
