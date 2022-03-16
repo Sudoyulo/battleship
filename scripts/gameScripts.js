@@ -87,13 +87,14 @@ const mapClickHandler = (e) => {
         placedLocation = placedLocation.concat(addList)
         veggieSizes.shift()
         $("#message").text(nextSizeMessage)
+        refreshBoard()
+
         if (veggieSizes.length === 0) { //start game chain here
           setup = false
           generateMiniBoard(gameSize);
           resetMainBoard();
         }
 
-        refreshBoard()
 
       } else {
         console.log("failed to add")
@@ -167,23 +168,13 @@ const generateMiniBoard = (size) => {
 }
 
 const resetMainBoard = () => {
-  $("#grocery-aisle").empty();
-  let size = 5;
 
-  for (let i = 0; i < size; i++) {
-    $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
-    for (let j = 0; j < size; j++) {
-      let locationMarker = alphabet[i] + String(j);
-      $("#row" + i).append('<td id="n' + locationMarker + '"><button class="mapPoint"> ? </button></td>')
-    }
-  }
-
-  $("#grocery-aisle td").css({
-    width: 62 / size + "vw",
-    height: 44 / size + "vh"
+  placedLocation.forEach((location) => {
+    $("#" + location).html('<button class="mapPoint"> ? </button>')
   })
+
   $(".mapPoint").css({
-    width: 31 / size + "vw",
-    height: 22 / size + "vh"
+    width: 31 / gameSize + "vw",
+    height: 22 / gameSize + "vh"
   })
 }
