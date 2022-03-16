@@ -27,7 +27,7 @@ const newGameHandler = (e) => {
   generateBoard(gameSize)
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
-
+  $("#message").text(nextSizeMessage)
   posSetup() //place locations
 
 }
@@ -111,7 +111,7 @@ const mapClickHandler = (e) => {
 const nextSizeMessage = () => {
   let message = "";
   if (veggieSizes.length > 0) {
-    message = "Next is width:" + veggieSizes[0]
+    message = "Next is width: " + veggieSizes[0]
   }
   return message;
 }
