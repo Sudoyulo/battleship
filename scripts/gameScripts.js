@@ -90,7 +90,7 @@ const mapClickHandler = (e) => {
         if (veggieSizes.length === 0) { //start game chain here
           setup = false
           generateMiniBoard(gameSize);
-          // generateP2Board(gameSize);
+          resetMainBoard();
         }
 
         refreshBoard()
@@ -146,7 +146,7 @@ const generateMiniBoard = (size) => {
     $("#my-field").append("<tr id=" + "myrow" + i + "></tr>")
     for (let j = 0; j < size; j++) {
       let locationMarker = alphabet[i] + String(j);
-      console.log("placed, put", placedLocation, locationMarker)
+      // console.log("placed, put", placedLocation, locationMarker)
       if (placedLocation.includes(locationMarker)) {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + myIcon + ' </p></td>')
       } else {
@@ -166,7 +166,24 @@ const generateMiniBoard = (size) => {
 
 }
 
-const generateP2Board = (size) => {
-  generateBoard(size);
+const resetMainBoard = () => {
+  $("#grocery-aisle").empty();
+  let size = 5;
 
+  for (let i = 0; i < size; i++) {
+    $("#grocery-aisle").append("<tr id=" + "row" + i + "></tr>")
+    for (let j = 0; j < size; j++) {
+      let locationMarker = alphabet[i] + String(j);
+      $("#row" + i).append('<td id="n' + locationMarker + '"><button class="mapPoint"> ? </button></td>')
+    }
+  }
+
+  $("#grocery-aisle td").css({
+    width: 62 / size + "vw",
+    height: 44 / size + "vh"
+  })
+  $(".mapPoint").css({
+    width: 31 / size + "vw",
+    height: 22 / size + "vh"
+  })
 }
