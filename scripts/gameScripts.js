@@ -15,6 +15,8 @@ let placedLocation = [];
 veggieSizes = [5, 4, 3, 3];
 let setup = true;
 let gameSize = $('#ng-dropdown').find(":selected").text();
+let myIcon = gameIcons[Math.floor(Math.random() * 4)];
+let p2Icon = gameIcons[Math.floor(Math.random() * 4)];
 
 const newGameHandler = (e) => {
   e.preventDefault()
@@ -141,7 +143,6 @@ const refreshBoard = () => {
 
 const generateMiniBoard = (size) => {
   $("#my-field").empty();
-  let myIcon = gameIcons[Math.floor(Math.random() * 4)];
 
   for (let i = 0; i < size; i++) {
     $("#my-field").append("<tr id=" + "myrow" + i + "></tr>")
@@ -164,6 +165,8 @@ const generateMiniBoard = (size) => {
     width: 22 / size + "vw",
     height: 11 / size + "vh"
   })
+
+
 
 }
 
