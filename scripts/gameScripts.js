@@ -34,7 +34,7 @@ const newGameHandler = (e) => {
   $("#my-field").empty();
   $("#message").text(nextSizeMessage)
   posSetup() //place locations
-
+  randomSpot();
 }
 
 const generateBoard = (size) => {
@@ -169,8 +169,6 @@ const generateMiniBoard = (size) => {
     height: 11 / size + "vh"
   })
 
-
-
 }
 
 const resetMainBoard = () => {
@@ -183,4 +181,24 @@ const resetMainBoard = () => {
     width: 31 / gameSize + "vw",
     height: 22 / gameSize + "vh"
   })
+}
+
+
+const autoGeneratep2 = (size) => {
+
+  let p2locations = [];
+
+}
+
+const randomSpot = () => {
+
+  let spot = "";
+  spot = alphabet[Math.floor(Math.random() * gameSize)] + String(Math.floor(Math.random() * gameSize));
+
+  alphabet.forEach(() => {
+    spot = alphabet[Math.floor(Math.random() * gameSize)] + String(Math.floor(Math.random() * gameSize));
+
+    console.log("hey", spot)
+  })
+
 }
