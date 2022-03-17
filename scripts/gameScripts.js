@@ -11,12 +11,15 @@ $(function () {
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
+
 let placedLocation = [];
 veggieSizes = [5, 4, 3, 3];
 let setup = true;
 let gameSize = $('#ng-dropdown').find(":selected").text();
 let myIcon = gameIcons[Math.floor(Math.random() * 4)];
-let p2Icon = gameIcons[Math.floor(Math.random() * 4)];
+
+let remainIcon = gameIcons.filter(item => item !== myIcon)
+let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
 
 const newGameHandler = (e) => {
   e.preventDefault()
@@ -173,7 +176,7 @@ const generateMiniBoard = (size) => {
 const resetMainBoard = () => {
 
   placedLocation.forEach((location) => {
-    $("#" + location).html('<button class="mapPoint"> ? </button>')
+    $("#" + location).html('<button class="mapPoint"> ' + p2Icon + ' </button>')
   })
 
   $(".mapPoint").css({
