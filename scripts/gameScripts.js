@@ -116,6 +116,15 @@ const mapClickHandler = (e) => {
 
 }
 
+const validPlacement = (array, spot) => {
+
+  let myLocations = array;
+
+  return true;
+
+}
+
+
 const nextSizeMessage = () => {
   let message = "";
   if (veggieSizes.length > 0) {
