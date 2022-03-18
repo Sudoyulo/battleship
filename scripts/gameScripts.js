@@ -24,6 +24,7 @@ const newGameHandler = (e) => {
   e.preventDefault()
 
   myIcon = gameIcons[Math.floor(Math.random() * 4)];
+  let remainIcon = gameIcons.filter(item => item !== myIcon)
   p2Icon = remainIcon[Math.floor(Math.random() * 3)];
   placedLocation = [];
   veggieSizes = [5, 4, 3, 3];
