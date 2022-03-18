@@ -36,6 +36,7 @@ const newGameHandler = (e) => {
   $("#message").text(nextSizeMessage)
   posSetup() //place locations
   randomSpot();
+  autoGeneratep2();
 }
 
 const generateBoard = (size) => {
@@ -188,10 +189,15 @@ const resetMainBoard = () => {
 const autoGeneratep2 = (size) => {
 
   let p2locations = [];
+  let count = 0;
 
-  for (let i = 0; i < 10; i++) {
-    p2locations.push(randomSpot)
+  while (count < veggieSizes.length) {
+    p2locations.push(randomSpot())
+    count++;
+
   }
+
+
 
   console.log("p2", p2locations)
 
@@ -201,11 +207,5 @@ const randomSpot = () => {
 
   let spot = "";
   spot = alphabet[Math.floor(Math.random() * gameSize)] + String(Math.floor(Math.random() * gameSize));
-
-  alphabet.forEach(() => {
-    spot = alphabet[Math.floor(Math.random() * gameSize)] + String(Math.floor(Math.random() * gameSize));
-
-    console.log("hey", spot)
-  })
-
+  return spot;
 }
