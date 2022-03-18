@@ -189,6 +189,12 @@ const autoGeneratep2 = (size) => {
 
   let p2locations = [];
 
+  for (let i = 0; i < 10; i++) {
+    p2locations.push(randomSpot)
+  }
+
+  console.log("p2", p2locations)
+
 }
 
 const randomSpot = () => {
