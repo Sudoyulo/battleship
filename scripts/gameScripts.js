@@ -11,7 +11,6 @@ $(function () {
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
-
 let placedLocation = [];
 let p2Location = [];
 veggieSizes = [5, 4, 3, 3];
@@ -33,7 +32,6 @@ const p2 = {
   pieceLocations: [],
   icon: p2Icon
 
-
 }
 
 const newGameHandler = (e) => {
@@ -44,17 +42,17 @@ const newGameHandler = (e) => {
   p2.icon = remainIcon[Math.floor(Math.random() * 3)];
   p1.pieceLocations, p2.pieceLocations = [];
   veggieSizes = [5, 4, 3, 3];
-
+  setup = true;
   gameSize = $('#ng-dropdown').find(":selected").text();
+
   generateBoard(gameSize)
-  $(".mapPoint").click((e) => mapClickHandler(e));
-  $("#my-field").empty();
-  $("#message").text(nextSizeMessage)
   posSetup() //place locations
   randomSpot();
   autoGeneratep2();
 
-  console.log("p2asd", p1.icon, p2.icon)
+  $(".mapPoint").click((e) => mapClickHandler(e));
+  $("#my-field").empty();
+  $("#message").text(nextSizeMessage)
 }
 
 const generateBoard = (size) => {
@@ -93,13 +91,23 @@ const mapClickHandler = (e) => {
   let keepAdding = true;
   console.log("aimed at", aimCoords)
 
-  // if (setup) {
-  //   validPlacement(placedLocation, e)
-  // }
+  if (setup) {
+    if (validPlacement(p1, e)) { // returns false if setup is over
+      generateMiniBoard(gameSize);
+      resetMainBoard();
+    }
+  }
 
+}
 
+const validPlacement = (player, e) => {
 
-  if (setup && !placedLocation.includes(aimCoords)) { //setup
+  let aimCoords = $(e.target).parent().attr('id')
+  let addThis = null;
+  let addList = [];
+  let keepAdding = true; //my location array < number of ships
+
+  if (!placedLocation.includes(aimCoords)) { // not already used
     let sameRow = $(e.target).parent().parent().children()
     let clickIndex = $(e.target).parent().index()
     let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
@@ -108,7 +116,7 @@ const mapClickHandler = (e) => {
       addThis = $(e.target).parent().attr('id')
 
       for (let i = 0; i < veggieSizes[0]; i++) {
-        if (p1.pieceLocations.includes(addThis)) {
+        if (player.pieceLocations.includes(addThis)) {
           keepAdding = false;
         }
         addList.push(addThis)
@@ -116,15 +124,16 @@ const mapClickHandler = (e) => {
       }
 
       if (keepAdding) {
-        p1.pieceLocations = p1.pieceLocations.concat(addList)
+        player.pieceLocations = player.pieceLocations.concat(addList)
         veggieSizes.shift()
         $("#message").text(nextSizeMessage)
         refreshBoard()
 
         if (veggieSizes.length === 0) { //start game chain here
-          setup = false
+          setup = false;
           generateMiniBoard(gameSize);
           resetMainBoard();
+          return true;
         }
 
       } else {
@@ -135,26 +144,12 @@ const mapClickHandler = (e) => {
     } else {
       console.log("too short")
     }
-    console.log("all", placedLocation)
-  } //end
+    console.log("all", player.pieceLocations)
 
-}
-
-const validPlacement = (array, e) => {
-
-  let myLocations = array;
-  let target = $(e.target).parent().attr('id')
-
-  let addThis = null;
-  let addList = [];
-  let keepAdding = true; //my location array < number of ships
+  }
 
 
-
-
-
-  //return false if setup is over
-  return true;
+  return false;
 
 }
 
