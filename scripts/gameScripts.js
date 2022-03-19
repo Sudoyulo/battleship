@@ -13,6 +13,7 @@ const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
 
 let placedLocation = [];
+let p2Location = [];
 veggieSizes = [5, 4, 3, 3];
 let setup = true;
 let gameSize = $('#ng-dropdown').find(":selected").text();
@@ -197,7 +198,7 @@ const resetMainBoard = () => {
 
 const autoGeneratep2 = (size) => {
 
-  let p2locations = [];
+  let locationHolder = [];
   let count = 0;
 
   while (count < veggieSizes.length) {
@@ -205,8 +206,6 @@ const autoGeneratep2 = (size) => {
     count++;
 
   }
-
-
 
   console.log("p2", p2locations)
 
