@@ -21,6 +21,20 @@ let myIcon = gameIcons[Math.floor(Math.random() * 4)];
 let remainIcon = gameIcons.filter(item => item !== myIcon)
 let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
 
+const p1 = {
+
+  pieceLocations: [],
+  icon: []
+
+}
+
+const p2 = {
+
+  pieceLocations: [],
+  icon: []
+
+}
+
 const newGameHandler = (e) => {
   e.preventDefault()
 
@@ -70,11 +84,17 @@ const newGameOptions = () => {
 
 const mapClickHandler = (e) => {
   e.preventDefault()
-  let aimCoords = $(e.target).parent().attr('id')
-  let addThis = null;
-  let addList = [];
-  let keepAdding = true;
+  // let aimCoords = $(e.target).parent().attr('id')
+  // let addThis = null;
+  // let addList = [];
+  // let keepAdding = true;
   console.log("aimed at", aimCoords)
+
+  if (setup) {
+    validPlacement(placedLocation, e)
+  }
+
+
 
   if (setup && !placedLocation.includes(aimCoords)) { //setup
     let sameRow = $(e.target).parent().parent().children()
@@ -91,6 +111,7 @@ const mapClickHandler = (e) => {
         addList.push(addThis)
         addThis = $(sameRow[clickIndex + i + 1]).attr('id')
       }
+
       if (keepAdding) {
         placedLocation = placedLocation.concat(addList)
         veggieSizes.shift()
@@ -102,7 +123,6 @@ const mapClickHandler = (e) => {
           generateMiniBoard(gameSize);
           resetMainBoard();
         }
-
 
       } else {
         console.log("failed to add")
@@ -117,10 +137,20 @@ const mapClickHandler = (e) => {
 
 }
 
-const validPlacement = (array, spot) => {
+const validPlacement = (array, e) => {
 
   let myLocations = array;
+  let target = $(e.target).parent().attr('id')
 
+  let addThis = null;
+  let addList = [];
+  let keepAdding = true; //my location array < number of ships
+
+
+
+
+
+  //return false if setup is over
   return true;
 
 }
