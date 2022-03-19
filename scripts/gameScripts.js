@@ -24,24 +24,25 @@ let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
 const p1 = {
 
   pieceLocations: [],
-  icon: []
+  icon: myIcon
 
 }
 
 const p2 = {
 
   pieceLocations: [],
-  icon: []
+  icon: p2Icon
+
 
 }
 
 const newGameHandler = (e) => {
   e.preventDefault()
 
-  myIcon = gameIcons[Math.floor(Math.random() * 4)];
-  let remainIcon = gameIcons.filter(item => item !== myIcon)
-  p2Icon = remainIcon[Math.floor(Math.random() * 3)];
-  placedLocation = [];
+  p1.icon = gameIcons[Math.floor(Math.random() * 4)];
+  let remainIcon = gameIcons.filter(item => item !== p1.icon)
+  p2.icon = remainIcon[Math.floor(Math.random() * 3)];
+  p1.pieceLocations, p2.pieceLocations = [];
   veggieSizes = [5, 4, 3, 3];
 
   gameSize = $('#ng-dropdown').find(":selected").text();
@@ -52,6 +53,8 @@ const newGameHandler = (e) => {
   posSetup() //place locations
   randomSpot();
   autoGeneratep2();
+
+  console.log("p2asd", p1.icon, p2.icon)
 }
 
 const generateBoard = (size) => {
@@ -84,15 +87,15 @@ const newGameOptions = () => {
 
 const mapClickHandler = (e) => {
   e.preventDefault()
-  // let aimCoords = $(e.target).parent().attr('id')
-  // let addThis = null;
-  // let addList = [];
-  // let keepAdding = true;
+  let aimCoords = $(e.target).parent().attr('id')
+  let addThis = null;
+  let addList = [];
+  let keepAdding = true;
   console.log("aimed at", aimCoords)
 
-  if (setup) {
-    validPlacement(placedLocation, e)
-  }
+  // if (setup) {
+  //   validPlacement(placedLocation, e)
+  // }
 
 
 
@@ -105,7 +108,7 @@ const mapClickHandler = (e) => {
       addThis = $(e.target).parent().attr('id')
 
       for (let i = 0; i < veggieSizes[0]; i++) {
-        if (placedLocation.includes(addThis)) {
+        if (p1.pieceLocations.includes(addThis)) {
           keepAdding = false;
         }
         addList.push(addThis)
@@ -113,7 +116,7 @@ const mapClickHandler = (e) => {
       }
 
       if (keepAdding) {
-        placedLocation = placedLocation.concat(addList)
+        p1.pieceLocations = p1.pieceLocations.concat(addList)
         veggieSizes.shift()
         $("#message").text(nextSizeMessage)
         refreshBoard()
@@ -181,7 +184,7 @@ const takeGlow = () => {
 }
 
 const refreshBoard = () => {
-  placedLocation.forEach((location) => {
+  p1.pieceLocations.forEach((location) => {
     $("#" + location).html("X").css({ background: "gainsboro" })
   })
 }
@@ -194,8 +197,8 @@ const generateMiniBoard = (size) => {
     for (let j = 0; j < size; j++) {
       let locationMarker = alphabet[i] + String(j);
       // console.log("placed, put", placedLocation, locationMarker)
-      if (placedLocation.includes(locationMarker)) {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + myIcon + ' </p></td>')
+      if (p1.pieceLocations.includes(locationMarker)) {
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + p1.icon + ' </p></td>')
       } else {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> &nbsp - &nbsp </p></td>')
       }
@@ -215,8 +218,8 @@ const generateMiniBoard = (size) => {
 
 const resetMainBoard = () => {
 
-  placedLocation.forEach((location) => {
-    $("#" + location).html('<button class="mapPoint"> ' + p2Icon + ' </button>')
+  p1.pieceLocations.forEach((location) => {
+    $("#" + location).html('<button class="mapPoint"> ' + p2.icon + ' </button>')
   })
 
   $(".mapPoint").css({
@@ -225,19 +228,18 @@ const resetMainBoard = () => {
   })
 }
 
-
 const autoGeneratep2 = (size) => {
 
   let locationHolder = [];
   let count = 0;
 
   while (count < veggieSizes.length) {
-    p2locations.push(randomSpot())
+    p2Location.push(randomSpot())
     count++;
 
   }
 
-  console.log("p2", p2locations)
+  console.log("p2", p2Location)
 
 }
 
