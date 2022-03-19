@@ -141,18 +141,21 @@ const validPlacement = (player, e) => {
         keepAdding = true;
       }
 
-    } else {
-      console.log("too short")
-    }
+    } else { setWarning("too short"); }
     console.log("all", player.pieceLocations)
-
   }
-
 
   return false;
 
 }
 
+
+const setWarning = (message) => {
+  $("#warning").text(message)
+  setTimeout(() => {
+    $("#warning").text("")
+  }, 1000)
+}
 
 const nextSizeMessage = () => {
   let message = "";
