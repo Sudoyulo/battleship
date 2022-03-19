@@ -14,7 +14,8 @@ const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 let placedLocation = [];
 let p2Location = [];
 veggieSizes = [5, 4, 3, 3];
-let setup = true;
+let p1setup = true;
+let p2setup = false;
 let gameSize = $('#ng-dropdown').find(":selected").text();
 let myIcon = gameIcons[Math.floor(Math.random() * 4)];
 let remainIcon = gameIcons.filter(item => item !== myIcon)
@@ -40,15 +41,16 @@ const newGameHandler = (e) => {
   p1.icon = gameIcons[Math.floor(Math.random() * 4)];
   let remainIcon = gameIcons.filter(item => item !== p1.icon)
   p2.icon = remainIcon[Math.floor(Math.random() * 3)];
-  p1.pieceLocations, p2.pieceLocations = [];
+  p1.pieceLocations = [];
+  p2.pieceLocations = [];
   veggieSizes = [5, 4, 3, 3];
-  setup = true;
+  p1setup = true;
+  p2setup = false;
   gameSize = $('#ng-dropdown').find(":selected").text();
 
   generateBoard(gameSize)
   posSetup() //place locations
   randomSpot();
-  autoGeneratep2();
 
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
@@ -85,19 +87,20 @@ const newGameOptions = () => {
 
 const mapClickHandler = (e) => {
   e.preventDefault()
-  let aimCoords = $(e.target).parent().attr('id')
-  let addThis = null;
-  let addList = [];
-  let keepAdding = true;
-  console.log("aimed at", aimCoords)
 
-  if (setup) {
+  if (p1setup) {
     if (validPlacement(p1, e)) { // returns false if setup is over
       generateMiniBoard(gameSize);
       resetMainBoard();
+      p2setup = true;
     }
   }
 
+  if (!p1setup && p2setup) {
+    autoGeneratep2();
+  }
+
+  console.log("oo?", $(e.target).parent())
 }
 
 const validPlacement = (player, e) => {
@@ -106,6 +109,7 @@ const validPlacement = (player, e) => {
   let addThis = null;
   let addList = [];
   let keepAdding = true; //my location array < number of ships
+
 
   if (!placedLocation.includes(aimCoords)) { // not already used
     let sameRow = $(e.target).parent().parent().children()
@@ -130,19 +134,23 @@ const validPlacement = (player, e) => {
         refreshBoard()
 
         if (veggieSizes.length === 0) { //start game chain here
-          setup = false;
+          p1setup = false;
           generateMiniBoard(gameSize);
           resetMainBoard();
           return true;
         }
 
       } else {
-        console.log("failed to add")
+        setWarning("failed to add")
+        console.log(p1.pieceLocations, p2.pieceLocations)
         keepAdding = true;
       }
 
-    } else { setWarning("too short"); }
-    console.log("all", player.pieceLocations)
+    } else {
+      setWarning("too short");
+      console.log(p1.pieceLocations, p2.pieceLocations)
+    }
+    // console.log("all", player.pieceLocations)
   }
 
   return false;
@@ -217,13 +225,15 @@ const generateMiniBoard = (size) => {
 const resetMainBoard = () => {
 
   p1.pieceLocations.forEach((location) => {
-    $("#" + location).html('<button class="mapPoint"> ' + p2.icon + ' </button>')
+    $("#" + location).html('<button class="mapPoint"> ? </button>')
   })
 
   $(".mapPoint").css({
     width: 31 / gameSize + "vw",
     height: 22 / gameSize + "vh"
   })
+
+  $(".mapPoint").click((e) => mapClickHandler(e));
 }
 
 const autoGeneratep2 = (size) => {
@@ -231,13 +241,17 @@ const autoGeneratep2 = (size) => {
   let locationHolder = [];
   let count = 0;
 
-  while (count < veggieSizes.length) {
-    p2Location.push(randomSpot())
-    count++;
+  // while (count < veggieSizes.length) {
+  //   p2Location.push(randomSpot())
+  //   count++;
 
-  }
+  // }
 
-  console.log("p2", p2Location)
+  $("#" + randomSpot()).click()
+
+  // validPlacement(p2,)
+  // resetMainBoard()
+  // console.log("p2", spot)
 
 }
 
