@@ -96,9 +96,14 @@ const mapClickHandler = (e) => {
     }
   }
 
-  if (!p1setup && p2setup) {
-    autoGeneratep2();
-  }
+  // if (!p1setup && p2setup) {
+  //   autoGeneratep2();
+  //   if (validPlacement(p2, e)) { // returns false if setup is over
+  //     generateMiniBoard(gameSize);
+  //     resetMainBoard();
+  //     p2setup = false;
+  //   }
+  // }
 
   console.log("oo?", $(e.target).parent())
 }
@@ -142,13 +147,11 @@ const validPlacement = (player, e) => {
 
       } else {
         setWarning("failed to add")
-        console.log(p1.pieceLocations, p2.pieceLocations)
         keepAdding = true;
       }
 
     } else {
       setWarning("too short");
-      console.log(p1.pieceLocations, p2.pieceLocations)
     }
     // console.log("all", player.pieceLocations)
   }
@@ -247,11 +250,13 @@ const autoGeneratep2 = (size) => {
 
   // }
 
-  $("#" + randomSpot()).click()
+  $("#E2").click(() => (console.log("hiya")))
 
-  // validPlacement(p2,)
-  // resetMainBoard()
-  // console.log("p2", spot)
+  // $("#" + randomSpot()).click()
+  // $("#" + randomSpot()).click()
+  // $("#" + randomSpot()).click()
+
+
 
 }
 
