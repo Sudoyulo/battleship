@@ -229,6 +229,7 @@ const resetMainBoard = () => {
 
   p1.pieceLocations.forEach((location) => {
     $("#" + location).html('<button class="mapPoint"> ? </button>')
+    $("#" + location).children().click((e) => mapClickHandler(e))
   })
 
   $(".mapPoint").css({
@@ -236,7 +237,6 @@ const resetMainBoard = () => {
     height: 22 / gameSize + "vh"
   })
 
-  $(".mapPoint").click((e) => mapClickHandler(e));
 }
 
 const autoGeneratep2 = (size) => {
