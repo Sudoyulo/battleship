@@ -89,40 +89,29 @@ const mapClickHandler = (e) => {
   e.preventDefault()
 
   if (p1setup) {
-    if (validPlacement(p1, e)) { // returns false if setup is over
+    let aimCoords = $(e.target).parent().attr('id')
+    if (validPlacement(p1, aimCoords)) { // returns false if setup is over
       generateMiniBoard(gameSize);
       resetMainBoard();
-      p2setup = true;
+      autoGeneratep2();
     }
   }
 
-  // if (!p1setup && p2setup) {
-  //   autoGeneratep2();
-  //   if (validPlacement(p2, e)) { // returns false if setup is over
-  //     generateMiniBoard(gameSize);
-  //     resetMainBoard();
-  //     p2setup = false;
-  //   }
-  // }
-
-  console.log("oo?", $(e.target).parent())
 }
 
-const validPlacement = (player, e) => {
+const validPlacement = (player, coords) => {
 
-  let aimCoords = $(e.target).parent().attr('id')
   let addThis = null;
   let addList = [];
   let keepAdding = true; //my location array < number of ships
 
-
-  if (!placedLocation.includes(aimCoords)) { // not already used
-    let sameRow = $(e.target).parent().parent().children()
-    let clickIndex = $(e.target).parent().index()
+  if (!player.pieceLocations.includes(coords)) { // not already used
+    let sameRow = $("#" + coords).parent().children()
+    let clickIndex = $("#" + coords).index()
     let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
 
     if (nextLocation.length === veggieSizes[0]) { //good size
-      addThis = $(e.target).parent().attr('id')
+      addThis = coords
 
       for (let i = 0; i < veggieSizes[0]; i++) {
         if (player.pieceLocations.includes(addThis)) {
@@ -239,24 +228,12 @@ const resetMainBoard = () => {
 
 }
 
-const autoGeneratep2 = (size) => {
+const autoGeneratep2 = () => {
 
   let locationHolder = [];
   let count = 0;
 
-  // while (count < veggieSizes.length) {
-  //   p2Location.push(randomSpot())
-  //   count++;
-
-  // }
-
-  $("#E2").click(() => (console.log("hiya")))
-
-  // $("#" + randomSpot()).click()
-  // $("#" + randomSpot()).click()
-  // $("#" + randomSpot()).click()
-
-
+  console.log("pap", $("#" + randomSpot()).parent().children())
 
 }
 
