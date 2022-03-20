@@ -13,7 +13,8 @@ const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 
 let placedLocation = [];
 let p2Location = [];
-veggieSizes = [5, 4, 3, 3];
+let veggieSizes = [5, 4, 3, 3];
+let veggieToDo = veggieSizes;
 let p1setup = true;
 let p2setup = false;
 let gameSize = $('#ng-dropdown').find(":selected").text();
@@ -22,17 +23,13 @@ let remainIcon = gameIcons.filter(item => item !== myIcon)
 let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
 
 const p1 = {
-
   pieceLocations: [],
   icon: myIcon
-
 }
 
 const p2 = {
-
   pieceLocations: [],
   icon: p2Icon
-
 }
 
 const newGameHandler = (e) => {
@@ -43,7 +40,7 @@ const newGameHandler = (e) => {
   p2.icon = remainIcon[Math.floor(Math.random() * 3)];
   p1.pieceLocations = [];
   p2.pieceLocations = [];
-  veggieSizes = [5, 4, 3, 3];
+  veggieToDo = veggieSizes;
   p1setup = true;
   p2setup = false;
   gameSize = $('#ng-dropdown').find(":selected").text();
@@ -90,16 +87,20 @@ const mapClickHandler = (e) => {
 
   if (p1setup) {
     let aimCoords = $(e.target).parent().attr('id')
-    if (validPlacement(p1, aimCoords)) { // returns false if setup is over
+    p1setup = validPlacement(p1, aimCoords)
+
+    if (!p1setup) {
       generateMiniBoard(gameSize);
       resetMainBoard();
-      autoGeneratep2();
+      autoGenerateP2();
     }
   }
 
 }
 
 const validPlacement = (player, coords) => {
+
+  console.log(player, coords)
 
   let addThis = null;
   let addList = [];
@@ -108,12 +109,12 @@ const validPlacement = (player, coords) => {
   if (!player.pieceLocations.includes(coords)) { // not already used
     let sameRow = $("#" + coords).parent().children()
     let clickIndex = $("#" + coords).index()
-    let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
+    let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieToDo[0])
 
-    if (nextLocation.length === veggieSizes[0]) { //good size
+    if (nextLocation.length === veggieToDo[0]) { //good size
       addThis = coords
 
-      for (let i = 0; i < veggieSizes[0]; i++) {
+      for (let i = 0; i < veggieToDo[0]; i++) {
         if (player.pieceLocations.includes(addThis)) {
           keepAdding = false;
         }
@@ -123,15 +124,12 @@ const validPlacement = (player, coords) => {
 
       if (keepAdding) {
         player.pieceLocations = player.pieceLocations.concat(addList)
-        veggieSizes.shift()
+        veggieToDo.shift()
         $("#message").text(nextSizeMessage)
         refreshBoard()
 
-        if (veggieSizes.length === 0) { //start game chain here
-          p1setup = false;
-          generateMiniBoard(gameSize);
-          resetMainBoard();
-          return true;
+        if (veggieToDo.length === 0) { //start game chain here
+          return false;
         }
 
       } else {
@@ -145,7 +143,7 @@ const validPlacement = (player, coords) => {
     // console.log("all", player.pieceLocations)
   }
 
-  return false;
+  return true;
 
 }
 
@@ -159,8 +157,8 @@ const setWarning = (message) => {
 
 const nextSizeMessage = () => {
   let message = "";
-  if (veggieSizes.length > 0) {
-    message = "Next is width: " + veggieSizes[0]
+  if (veggieToDo.length > 0) {
+    message = "Next is width: " + veggieToDo[0]
   }
   return message;
 }
@@ -173,7 +171,7 @@ const posSetup = () => {
 const giveGlow = (e) => {
   let sameRow = $(e.target).parent().parent().children()
   let clickIndex = $(e.target).parent().index()
-  let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieSizes[0])
+  let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieToDo[0])
   $(nextLocation).css({ background: "blue" })
 }
 
@@ -228,13 +226,18 @@ const resetMainBoard = () => {
 
 }
 
-const autoGeneratep2 = () => {
+const autoGenerateP2 = () => {
 
-  let locationHolder = [];
-  let count = 0;
 
-  console.log("pap", $("#" + randomSpot()).parent().children())
+  const sum = [1, 2, 3].reduce((partialSum, a) => partialSum + a, 0);
 
+  while (p2.pieceLocations.length < sum) {
+
+    p2continue = validPlacement(p2, randomSpot())
+
+  }
+
+  console.log("boba", p2.pieceLocations)
 }
 
 const randomSpot = () => {
