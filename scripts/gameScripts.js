@@ -47,7 +47,6 @@ const newGameHandler = (e) => {
 
   generateBoard(gameSize)
   posSetup() //place locations
-  randomSpot();
 
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
@@ -100,7 +99,7 @@ const mapClickHandler = (e) => {
 
 const validPlacement = (player, coords) => {
 
-  console.log(player, coords)
+  console.log("oioi", player, coords)
 
   let addThis = null;
   let addList = [];
@@ -111,6 +110,7 @@ const validPlacement = (player, coords) => {
     let clickIndex = $("#" + coords).index()
     let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieToDo[0])
 
+    console.log(nextLocation.length, veggieToDo[0])
     if (nextLocation.length === veggieToDo[0]) { //good size
       addThis = coords
 
@@ -124,6 +124,7 @@ const validPlacement = (player, coords) => {
 
       if (keepAdding) {
         player.pieceLocations = player.pieceLocations.concat(addList)
+        addList = [];
         veggieToDo.shift()
         $("#message").text(nextSizeMessage)
         refreshBoard()
@@ -164,7 +165,6 @@ const nextSizeMessage = () => {
 }
 
 const posSetup = () => {
-  setup = true;
   $(".mapPoint").hover((e) => { giveGlow(e) }, (e) => { takeGlow() })
 }
 
@@ -228,16 +228,17 @@ const resetMainBoard = () => {
 
 const autoGenerateP2 = () => {
 
-
-  const sum = [1, 2, 3].reduce((partialSum, a) => partialSum + a, 0);
+  veggieToDo = veggieSizes;
+  const sum = veggieSizes.reduce((partialSum, a) => partialSum + a, 0);
+  let count = 0;
 
   while (p2.pieceLocations.length < sum) {
 
     p2continue = validPlacement(p2, randomSpot())
-
+    console.log("boba", p2.pieceLocations, sum)
+    count++;
   }
 
-  console.log("boba", p2.pieceLocations)
 }
 
 const randomSpot = () => {
