@@ -23,11 +23,13 @@ let remainIcon = gameIcons.filter(item => item !== myIcon)
 let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
 
 const p1 = {
+  name: "p1",
   pieceLocations: [],
   icon: myIcon
 }
 
 const p2 = {
+  name: "p2",
   pieceLocations: [],
   icon: p2Icon
 }
@@ -131,25 +133,17 @@ const validPlacement = (player, coords) => {
         addList = [];
         veggieToDo.shift()
         $("#message").text(nextSizeMessage)
-        refreshBoard(player)
-
-        if (veggieToDo.length === 0) { //start game chain here
-          return false;
-        }
+        if (player.name === "p1") { refreshBoard(player) } //show spots
+        if (veggieToDo.length === 0) { return false; } //done
 
       } else {
         setWarning("failed to add")
         keepAdding = true;
       }
 
-    } else {
-      setWarning("too short");
-    }
-    // console.log("all", player.pieceLocations)
+    } else { setWarning("too short"); }
   }
-
   return true;
-
 }
 
 
