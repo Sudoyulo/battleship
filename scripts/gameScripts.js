@@ -16,7 +16,7 @@ let p2Location = [];
 let veggieSizes = [5, 4, 3, 3];
 let veggieToDo = [...veggieSizes];
 let p1setup = true;
-let p2setup = false;
+let gameStart = false;
 let gameSize = $('#ng-dropdown').find(":selected").text();
 let myIcon = gameIcons[Math.floor(Math.random() * 4)];
 let remainIcon = gameIcons.filter(item => item !== myIcon)
@@ -42,7 +42,7 @@ const newGameHandler = (e) => {
   p2.pieceLocations = [];
   veggieToDo = [...veggieSizes];
   p1setup = true;
-  p2setup = false;
+  gameStart = false;
   gameSize = $('#ng-dropdown').find(":selected").text();
 
   generateBoard(gameSize)
@@ -51,6 +51,7 @@ const newGameHandler = (e) => {
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
   $("#message").text(nextSizeMessage)
+
 }
 
 const generateBoard = (size) => {
@@ -90,9 +91,12 @@ const mapClickHandler = (e) => {
 
     if (!p1setup) {
       generateMiniBoard(gameSize);
-      autoGenerateP2();
       resetMainBoard();
+      autoGenerateP2();
     }
+  }
+
+  if (gameStart) {
   }
 
 }
@@ -127,7 +131,7 @@ const validPlacement = (player, coords) => {
         addList = [];
         veggieToDo.shift()
         $("#message").text(nextSizeMessage)
-        refreshBoard()
+        refreshBoard(player)
 
         if (veggieToDo.length === 0) { //start game chain here
           return false;
@@ -179,9 +183,9 @@ const takeGlow = () => {
   $(".mapPoint").parent().css({ background: "gainsboro" })
 }
 
-const refreshBoard = () => {
-  p1.pieceLocations.forEach((location) => {
-    $("#" + location).html("X").css({ background: "gainsboro" })
+const refreshBoard = (player) => {
+  player.pieceLocations.forEach((location) => {
+    $("#" + location).html(player.icon).css({ background: "gainsboro" })
   })
 }
 
@@ -214,7 +218,7 @@ const generateMiniBoard = (size) => {
 
 const resetMainBoard = () => {
 
-  p2.pieceLocations.forEach((location) => {
+  p1.pieceLocations.forEach((location) => {
     $("#" + location).html('<button class="mapPoint"> ? </button>')
     $("#" + location).children().click((e) => mapClickHandler(e))
   })
@@ -235,6 +239,7 @@ const autoGenerateP2 = () => {
     p2continue = validPlacement(p2, randomSpot())
   }
 
+  gameStart = true;
 }
 
 const randomSpot = () => {
