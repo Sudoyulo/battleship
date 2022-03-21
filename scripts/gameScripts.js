@@ -14,7 +14,7 @@ const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 let placedLocation = [];
 let p2Location = [];
 let veggieSizes = [5, 4, 3, 3];
-let veggieToDo = veggieSizes;
+let veggieToDo = [...veggieSizes];
 let p1setup = true;
 let p2setup = false;
 let gameSize = $('#ng-dropdown').find(":selected").text();
@@ -40,7 +40,7 @@ const newGameHandler = (e) => {
   p2.icon = remainIcon[Math.floor(Math.random() * 3)];
   p1.pieceLocations = [];
   p2.pieceLocations = [];
-  veggieToDo = veggieSizes;
+  veggieToDo = [...veggieSizes];
   p1setup = true;
   p2setup = false;
   gameSize = $('#ng-dropdown').find(":selected").text();
@@ -90,8 +90,8 @@ const mapClickHandler = (e) => {
 
     if (!p1setup) {
       generateMiniBoard(gameSize);
-      resetMainBoard();
       autoGenerateP2();
+      resetMainBoard();
     }
   }
 
@@ -214,7 +214,7 @@ const generateMiniBoard = (size) => {
 
 const resetMainBoard = () => {
 
-  p1.pieceLocations.forEach((location) => {
+  p2.pieceLocations.forEach((location) => {
     $("#" + location).html('<button class="mapPoint"> ? </button>')
     $("#" + location).children().click((e) => mapClickHandler(e))
   })
@@ -228,16 +228,11 @@ const resetMainBoard = () => {
 
 const autoGenerateP2 = () => {
 
-  veggieToDo = veggieSizes;
-  const sum = veggieSizes.reduce((a, b) => a + b, 0)
-  let count = 0;
-  console.log("boba sum", p2.pieceLocations, sum)
+  veggieToDo = [...veggieSizes];
+  const sum = veggieToDo.reduce((a, b) => a + b, 0)
 
   while (p2.pieceLocations.length < sum) {
-
     p2continue = validPlacement(p2, randomSpot())
-    console.log("boba", p2.pieceLocations, sum)
-    count++;
   }
 
 }
