@@ -229,8 +229,9 @@ const resetMainBoard = () => {
 const autoGenerateP2 = () => {
 
   veggieToDo = veggieSizes;
-  const sum = veggieSizes.reduce((partialSum, a) => partialSum + a, 0);
+  const sum = veggieSizes.reduce((a, b) => a + b, 0)
   let count = 0;
+  console.log("boba sum", p2.pieceLocations, sum)
 
   while (p2.pieceLocations.length < sum) {
 
