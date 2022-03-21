@@ -1,16 +1,10 @@
-
-$(function () {
-  newGameOptions()
-  $("#new-game").click((e) => newGameHandler(e));
-});
-
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
 const veggieSizes = [5, 4, 3, 3];
 
 let veggieToDo = [...veggieSizes];
 let gameSize = $('#ng-dropdown').find(":selected").text();
-
+let setup = true;
 
 const p1 = {
   name: "p1",
@@ -45,6 +39,12 @@ const newGameHandler = (e) => {
   $("#message").text(nextSizeMessage)
 
 }
+
+$(function () {
+  newGameOptions()
+  $("#new-game").click((e) => newGameHandler(e));
+
+});
 
 const generateBoard = (size) => {
   $("#grocery-aisle").empty();
@@ -122,9 +122,11 @@ const validPlacement = (player, coords) => {
         if (veggieToDo.length === 0) { return false; } //done
 
       } else {
-        setWarning("failed to add")
+        if (player.name === "p1") { setWarning("failed to add") }
         keepAdding = true;
       }
+    } else {
+      if (player.name === "p1") { setWarning("tooshort") }
     }
   }
   return true;
