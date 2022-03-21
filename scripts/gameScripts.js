@@ -2,36 +2,26 @@
 $(function () {
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
-
-  //testing
-  // generateBoard(5)
-  // $(".mapPoint").click((e) => mapClickHandler(e));
 });
 
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] //10
 const gameIcons = ["🍉", "🧅", "🫑", "🍆", "🌽"];
+const veggieSizes = [5, 4, 3, 3];
 
-let placedLocation = [];
-let p2Location = [];
-let veggieSizes = [5, 4, 3, 3];
 let veggieToDo = [...veggieSizes];
-let p1setup = true;
-let gameStart = false;
 let gameSize = $('#ng-dropdown').find(":selected").text();
-let myIcon = gameIcons[Math.floor(Math.random() * 4)];
-let remainIcon = gameIcons.filter(item => item !== myIcon)
-let p2Icon = remainIcon[Math.floor(Math.random() * 3)];
+
 
 const p1 = {
   name: "p1",
   pieceLocations: [],
-  icon: myIcon
+  icon: null
 }
 
 const p2 = {
   name: "p2",
   pieceLocations: [],
-  icon: p2Icon
+  icon: null
 }
 
 const newGameHandler = (e) => {
@@ -43,7 +33,7 @@ const newGameHandler = (e) => {
   p1.pieceLocations = [];
   p2.pieceLocations = [];
   veggieToDo = [...veggieSizes];
-  p1setup = true;
+  setup = true;
   gameStart = false;
   gameSize = $('#ng-dropdown').find(":selected").text();
 
@@ -87,11 +77,11 @@ const newGameOptions = () => {
 const mapClickHandler = (e) => {
   e.preventDefault()
 
-  if (p1setup) {
+  if (setup) {
     let aimCoords = $(e.target).parent().attr('id')
-    p1setup = validPlacement(p1, aimCoords)
+    setup = validPlacement(p1, aimCoords)
 
-    if (!p1setup) {
+    if (!setup) {
       generateMiniBoard(gameSize);
       resetMainBoard();
       autoGenerateP2();
@@ -105,8 +95,6 @@ const mapClickHandler = (e) => {
 
 const validPlacement = (player, coords) => {
 
-  console.log("oioi", player, coords)
-
   let addThis = null;
   let addList = [];
   let keepAdding = true; //my location array < number of ships
@@ -116,21 +104,18 @@ const validPlacement = (player, coords) => {
     let clickIndex = $("#" + coords).index()
     let nextLocation = sameRow.slice(clickIndex, clickIndex + veggieToDo[0])
 
-    console.log(nextLocation.length, veggieToDo[0])
     if (nextLocation.length === veggieToDo[0]) { //good size
-      addThis = coords
 
       for (let i = 0; i < veggieToDo[0]; i++) {
-        if (player.pieceLocations.includes(addThis)) {
+        if (player.pieceLocations.includes(coords)) {
           keepAdding = false;
         }
-        addList.push(addThis)
-        addThis = $(sameRow[clickIndex + i + 1]).attr('id')
+        addList.push(coords)
+        coords = $(sameRow[clickIndex + i + 1]).attr('id')
       }
 
       if (keepAdding) {
         player.pieceLocations = player.pieceLocations.concat(addList)
-        addList = [];
         veggieToDo.shift()
         $("#message").text(nextSizeMessage)
         if (player.name === "p1") { refreshBoard(player) } //show spots
@@ -140,12 +125,10 @@ const validPlacement = (player, coords) => {
         setWarning("failed to add")
         keepAdding = true;
       }
-
-    } else { setWarning("too short"); }
+    }
   }
   return true;
 }
-
 
 const setWarning = (message) => {
   $("#warning").text(message)
