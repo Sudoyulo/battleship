@@ -9,12 +9,16 @@ let setup = true;
 const P1 = {
   name: "P1",
   pieceLocations: [],
+  hitLocations: [],
+  missedLocations: [],
   icon: null
 }
 
 const P2 = {
   name: "P2",
   pieceLocations: [],
+  hitLocations: [],
+  missedLocations: [],
   icon: null
 }
 
@@ -89,7 +93,7 @@ const mapClickHandler = (e) => {
   }
 
   if (gameStart) {
-
+    showLives(P1);
   }
 
 }
@@ -229,7 +233,16 @@ const randomSpot = () => {
   return spot;
 }
 
-const showLives = (player) = {
+const showLives = (player) => {
 
+  let $table = $(".user-ships-" + player.name)
+  let array = [];
 
+  $table.empty();
+
+  veggieSizes.forEach((size) => {
+    array.push(player.pieceLocations.splice(0, size))
+  })
+
+  console.log(array)
 }
