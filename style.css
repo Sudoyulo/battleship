@@ -35,6 +35,10 @@ p {
   margin-bottom: 10px;
 }
 
+#ship-container p {
+  font-size:x-small;
+}
+
 #hits {
   display: flex;
   justify-content: space-between; 

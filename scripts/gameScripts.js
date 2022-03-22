@@ -9,7 +9,7 @@ let setup = true;
 const P1 = {
   name: "P1",
   pieceLocations: [],
-  hitLocations: [],
+  hitLocations: ["A1", "D1", "C3"],
   missedLocations: [],
   icon: null
 }
@@ -17,7 +17,7 @@ const P1 = {
 const P2 = {
   name: "P2",
   pieceLocations: [],
-  hitLocations: [],
+  hitLocations: ["A1", "D1", "C3"],
   missedLocations: [],
   icon: null
 }
@@ -93,7 +93,8 @@ const mapClickHandler = (e) => {
   }
 
   if (gameStart) {
-    showLives(P1);
+    showLives(P1, P2);
+    showLives(P2, P1);
   }
 
 }
@@ -233,16 +234,32 @@ const randomSpot = () => {
   return spot;
 }
 
-const showLives = (player) => {
+const showLives = (player1, player2) => {
 
-  let $table = $(".user-ships-" + player.name)
-  let array = [];
+  let $table = $(".user-ships-" + player1.name)
+  let veggieList = [];
 
   $table.empty();
 
   veggieSizes.forEach((size) => {
-    array.push(player.pieceLocations.splice(0, size))
+    veggieList.push(player1.pieceLocations.splice(0, size))
   })
 
-  console.log(array)
+  let hitMiss = veggieList.map((section) => {
+
+    let iconOrX = section.map((piece) => {
+
+      if (player2.hitLocations.includes(piece)) {
+        return "X"
+      }
+
+      return player1.icon
+    })
+
+    return "<p>" + iconOrX.join("") + "</p > "
+
+  })
+
+  $($table).append(hitMiss)
+
 }
