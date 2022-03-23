@@ -11,7 +11,7 @@ const P1 = {
   name: "P1",
   pieceLocations: [],
   hitLocations: ["A1", "D1", "C3"],
-  missedLocations: [],
+  missedLocations: ["A2"],
   icon: null
 }
 
@@ -189,6 +189,9 @@ const refreshBoard = () => {
   } else {
     P2.hitLocations.forEach((location) => {
       $("#" + location).html(P1.icon).css({ background: "gainsboro" })
+    })
+    P1.missedLocations.forEach((location) => {
+      $("#" + location).html("X").css({ background: "gainsboro" })
     })
   }
 }
