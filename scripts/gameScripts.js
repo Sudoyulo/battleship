@@ -95,19 +95,20 @@ const mapClickHandler = (e) => {
       autoGenerateP2();
       gameStart = true;
     }
-    aimCoords = ""
+
   }
 
   if (gameStart) {
     aimCoords = $(e.target).parent().attr('id')
-    showLives(P1, P2);
-    showLives(P2, P1);
 
     attackTurn(P1, P2, aimCoords)
+    attackTurn(P2, P1, randomSpot())
     refreshBoard();
 
+    showLives(P1, P2);
+    showLives(P2, P1);
   }
-
+  aimCoords = ""
 }
 
 const validPlacement = (player, coords) => {
@@ -256,10 +257,11 @@ const showLives = (player1, player2) => {
 
   let $table = $(".user-ships-" + player1.name)
   let veggieList = [];
+  let locationCopy = [...player1.pieceLocations]
   $table.empty();
 
   veggieSizes.forEach((size) => {
-    veggieList.push(player1.pieceLocations.splice(0, size))
+    veggieList.push(locationCopy.splice(0, size))
   })
 
   let hitMiss = veggieList.map((section) => {
@@ -270,12 +272,12 @@ const showLives = (player1, player2) => {
     return "<p>" + iconOrX.join("") + "</p > "
   })
   $($table).append(hitMiss)
+
 }
 
 const attackTurn = (player1, player2, location) => {
 
   console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
 
-  attackTurn(P2, P1, randomSpot())
 
 }
