@@ -5,6 +5,7 @@ const veggieSizes = [5, 4, 3, 3];
 let veggieToDo = [...veggieSizes];
 let gameSize = $('#ng-dropdown').find(":selected").text();
 let setup = true;
+let gameStart = false;
 
 const P1 = {
   name: "P1",
@@ -49,7 +50,6 @@ const newGameHandler = (e) => {
 $(function () {
   newGameOptions()
   $("#new-game").click((e) => newGameHandler(e));
-
 });
 
 const generateBoard = (size) => {
@@ -83,20 +83,29 @@ const newGameOptions = () => {
 const mapClickHandler = (e) => {
   e.preventDefault()
 
+  let aimCoords = "";
+
   if (setup) {
-    let aimCoords = $(e.target).parent().attr('id')
+    aimCoords = $(e.target).parent().attr('id')
     setup = validPlacement(P1, aimCoords)
 
     if (!setup) {
       generateMiniBoard(gameSize);
       resetMainBoard();
       autoGenerateP2();
+      gameStart = true;
     }
+    aimCoords = ""
   }
 
   if (gameStart) {
+    aimCoords = $(e.target).parent().attr('id')
     showLives(P1, P2);
     showLives(P2, P1);
+
+    attackTurn(P1, P2, aimCoords)
+    refreshBoard();
+
   }
 
 }
@@ -126,7 +135,7 @@ const validPlacement = (player, coords) => {
         player.pieceLocations = player.pieceLocations.concat(addList)
         veggieToDo.shift()
         $("#message").text(nextSizeMessage)
-        if (player.name === "P1") { refreshBoard(player) } //show spots
+        if (player.name === "P1") { refreshBoard() } //show spots
         if (veggieToDo.length === 0) { return false; } //done
 
       } else {
@@ -170,10 +179,17 @@ const takeGlow = () => {
   $(".mapPoint").parent().css({ background: "gainsboro" })
 }
 
-const refreshBoard = (player) => {
-  player.pieceLocations.forEach((location) => {
-    $("#" + location).html(player.icon).css({ background: "gainsboro" })
-  })
+const refreshBoard = () => {
+
+  if (setup) {
+    P1.pieceLocations.forEach((location) => {
+      $("#" + location).html(P1.icon).css({ background: "gainsboro" })
+    })
+  } else {
+    P2.hitLocations.forEach((location) => {
+      $("#" + location).html(P1.icon).css({ background: "gainsboro" })
+    })
+  }
 }
 
 const generateMiniBoard = (size) => {
@@ -240,7 +256,6 @@ const showLives = (player1, player2) => {
 
   let $table = $(".user-ships-" + player1.name)
   let veggieList = [];
-
   $table.empty();
 
   veggieSizes.forEach((size) => {
@@ -248,20 +263,19 @@ const showLives = (player1, player2) => {
   })
 
   let hitMiss = veggieList.map((section) => {
-
     let iconOrX = section.map((piece) => {
-
-      if (player2.hitLocations.includes(piece)) {
-        return "X"
-      }
-
+      if (player2.hitLocations.includes(piece)) { return "X" }
       return player1.icon
     })
-
     return "<p>" + iconOrX.join("") + "</p > "
-
   })
-
   $($table).append(hitMiss)
+}
+
+const attackTurn = (player1, player2, location) => {
+
+  console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
+
+  attackTurn(P2, P1, randomSpot())
 
 }
