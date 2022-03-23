@@ -37,6 +37,8 @@ const newGameHandler = (e) => {
 
   generateBoard(gameSize)
   posSetup() //place locations
+  showLives(P1, P2);
+  showLives(P2, P1);
 
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
