@@ -10,15 +10,15 @@ let gameStart = false;
 const P1 = {
   name: "P1",
   pieceLocations: [],
-  hitLocations: ["A1", "D1", "C3"],
-  missedLocations: ["A2"],
+  hitLocations: [],
+  missedLocations: [],
   icon: null
 }
 
 const P2 = {
   name: "P2",
   pieceLocations: [],
-  hitLocations: ["A1", "D1", "C3"],
+  hitLocations: [],
   missedLocations: [],
   icon: null
 }
@@ -31,6 +31,10 @@ const newGameHandler = (e) => {
   P2.icon = remainIcon[Math.floor(Math.random() * 3)];
   P1.pieceLocations = [];
   P2.pieceLocations = [];
+  P1.hitLocations = [];
+  P1.missedLocations = [];
+  P2.hitLocations = [];
+  P2.missedLocations = [];
   veggieToDo = [...veggieSizes];
   setup = true;
   gameStart = false;
@@ -102,11 +106,11 @@ const mapClickHandler = (e) => {
     aimCoords = $(e.target).parent().attr('id')
 
     attackTurn(P1, P2, aimCoords)
-    attackTurn(P2, P1, randomSpot())
+    // attackTurn(P2, P1, randomSpot())
     refreshBoard();
 
-    showLives(P1, P2);
-    showLives(P2, P1);
+    showLives(P1);
+    showLives(P2);
   }
   aimCoords = ""
 }
@@ -256,7 +260,7 @@ const randomSpot = () => {
   return spot;
 }
 
-const showLives = (player1, player2) => {
+const showLives = (player1) => {
 
   let $table = $(".user-ships-" + player1.name)
   let veggieList = [];
@@ -269,7 +273,7 @@ const showLives = (player1, player2) => {
 
   let hitMiss = veggieList.map((section) => {
     let iconOrX = section.map((piece) => {
-      if (player2.hitLocations.includes(piece)) { return "X" }
+      if (player1.hitLocations.includes(piece)) { return "X" }
       return player1.icon
     })
     return "<p>" + iconOrX.join("") + "</p > "
@@ -282,12 +286,15 @@ const attackTurn = (player1, player2, location) => {
 
   console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
 
-  if (player2.pieceLocations.includes(location) && !player1.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
+  if (player2.pieceLocations.includes(location) && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
     setWarning("hit")
+    player2.hitLocations.push(location)
 
   } else {
     setWarning("miss")
+    player2.missedLocations.push(location)
   }
 
+  console.log(P2.pieceLocations)
 
 }
