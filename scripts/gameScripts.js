@@ -192,7 +192,7 @@ const refreshBoard = () => {
     })
   } else {
     P2.hitLocations.forEach((location) => {
-      $("#" + location).html(P1.icon).css({ background: "gainsboro" })
+      $("#" + location).html(P2.icon).css({ background: "gainsboro" })
     })
     P2.missedLocations.forEach((location) => {
       $("#" + location).html("X").css({ background: "gainsboro" })
@@ -284,15 +284,25 @@ const showLives = (player1) => {
 
 const attackTurn = (player1, player2, location) => {
 
-  console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
+  // console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
+  console.log("p2", P1.hitLocations, P1.missedLocations)
 
   if (player2.pieceLocations.includes(location) && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
-    if (player1.name === "P!") { setWarning("hit") }
+    if (player1.name === "P1") { setWarning("hit") }
     player2.hitLocations.push(location)
 
   } else {
-    if (player1.name === "P!") { setWarning("hit") }
-    player2.missedLocations.push(location)
+    if (player1.name === "P1") {
+      setWarning("miss")
+      player2.missedLocations.push(location)
+    }
+    if (player1.name === "P2" && !player2.missedLocations.includes(location)) {
+      player2.missedLocations.push(location)
+    } else {
+      console.log("reattack")
+      attackTurn(P2, P1, randomSpot())
+    }
+
   }
 
 }
