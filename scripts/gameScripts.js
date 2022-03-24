@@ -282,5 +282,12 @@ const attackTurn = (player1, player2, location) => {
 
   console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
 
+  if (player2.pieceLocations.includes(location) && !player1.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
+    setWarning("hit")
+
+  } else {
+    setWarning("miss")
+  }
+
 
 }
