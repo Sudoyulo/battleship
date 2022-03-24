@@ -106,7 +106,7 @@ const mapClickHandler = (e) => {
     aimCoords = $(e.target).parent().attr('id')
 
     attackTurn(P1, P2, aimCoords)
-    // attackTurn(P2, P1, randomSpot())
+    attackTurn(P2, P1, randomSpot())
     refreshBoard();
 
     showLives(P1);
@@ -194,7 +194,7 @@ const refreshBoard = () => {
     P2.hitLocations.forEach((location) => {
       $("#" + location).html(P1.icon).css({ background: "gainsboro" })
     })
-    P1.missedLocations.forEach((location) => {
+    P2.missedLocations.forEach((location) => {
       $("#" + location).html("X").css({ background: "gainsboro" })
     })
   }
@@ -287,14 +287,12 @@ const attackTurn = (player1, player2, location) => {
   console.log(`${player1.name} attacks ${player2.name} at location ${location}`)
 
   if (player2.pieceLocations.includes(location) && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
-    setWarning("hit")
+    if (player1.name === "P!") { setWarning("hit") }
     player2.hitLocations.push(location)
 
   } else {
-    setWarning("miss")
+    if (player1.name === "P!") { setWarning("hit") }
     player2.missedLocations.push(location)
   }
-
-  console.log(P2.pieceLocations)
 
 }
