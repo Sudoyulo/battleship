@@ -294,7 +294,7 @@ const attackTurn = (player1, player2, location) => {
       setWarning("miss")
       player2.missedLocations.push(location)
     }
-    if (player1.name === "P2" && !player2.missedLocations.includes(location)) {
+    if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
       player2.missedLocations.push(location)
     } else {
       console.log("reattack")
