@@ -290,7 +290,6 @@ const showLives = (player1) => {
 
 const attackTurn = (player1, player2, location) => {
 
-
   if (player2.pieceLocations.includes(location) && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
     if (player1.name === "P1") { setWarning("hit") }
     player2.hitLocations.push(location)
@@ -308,5 +307,4 @@ const attackTurn = (player1, player2, location) => {
 
   }
 
-  console.log("attacker", player1, player2)
 }

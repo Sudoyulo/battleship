@@ -36,6 +36,15 @@ p {
   margin-bottom: 10px;
 }
 
+.msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+  color: green;
+  height: 15px;
+}
+
 .user-ships-P1, .user-ships-P2 {
   font-size:x-small;
 }
