@@ -106,7 +106,9 @@ const mapClickHandler = (e) => {
     aimCoords = $(e.target).parent().attr('id')
 
     attackTurn(P1, P2, aimCoords)
-    if (P1.hitLocations || P1.missedLocations) { attackTurn(P2, P1, randomSpot()) }
+    if (P2.hitLocations.length !== 0 && P2.missedLocations.length !== 0) {
+      attackTurn(P2, P1, randomSpot())
+    }
 
     refreshBoard();
 
@@ -251,7 +253,6 @@ const autoGenerateP2 = () => {
     P2continue = validPlacement(P2, randomSpot())
   }
 
-  gameStart = true;
 }
 
 const randomSpot = () => {
@@ -285,6 +286,7 @@ const showLives = (player1) => {
 
 const attackTurn = (player1, player2, location) => {
 
+
   if (player2.pieceLocations.includes(location) && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
     if (player1.name === "P1") { setWarning("hit") }
     player2.hitLocations.push(location)
@@ -293,8 +295,7 @@ const attackTurn = (player1, player2, location) => {
     if (player1.name === "P1") {
       setWarning("miss")
       player2.missedLocations.push(location)
-    }
-    if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
+    } else if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
       player2.missedLocations.push(location)
     } else {
       console.log("reattack")
@@ -303,4 +304,5 @@ const attackTurn = (player1, player2, location) => {
 
   }
 
+  console.log("attacker", player1, player2)
 }
