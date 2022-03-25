@@ -47,7 +47,7 @@ const newGameHandler = (e) => {
 
   $(".mapPoint").click((e) => mapClickHandler(e));
   $("#my-field").empty();
-  $("#message").text(nextSizeMessage)
+  $("#warning").text(nextSizeMessage)
 
 }
 
@@ -142,7 +142,7 @@ const validPlacement = (player, coords) => {
       if (keepAdding) {
         player.pieceLocations = player.pieceLocations.concat(addList)
         veggieToDo.shift()
-        $("#message").text(nextSizeMessage)
+        $("#warning").text(nextSizeMessage)
         if (player.name === "P1") { refreshBoard() } //show spots
         if (veggieToDo.length === 0) { return false; } //done
 
@@ -295,7 +295,7 @@ const attackTurn = (player1, player2, location) => {
     player2.hitLocations.push(location)
 
   } else {
-    if (player1.name === "P1") {
+    if (player1.name === "P1" && location !== undefined) {
       setWarning("miss")
       player2.missedLocations.push(location)
     } else if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
