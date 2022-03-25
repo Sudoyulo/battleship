@@ -105,13 +105,13 @@ const mapClickHandler = (e) => {
   if (gameStart) {
     aimCoords = $(e.target).parent().attr('id')
 
-    attackTurn(P1, P2, aimCoords)
-    if (P2.hitLocations.length !== 0 && P2.missedLocations.length !== 0) {
+    if (P2.hitLocations.length + P2.missedLocations.length !== 0) {
       attackTurn(P2, P1, randomSpot())
     }
+    attackTurn(P1, P2, aimCoords)
 
     refreshBoard();
-
+    generateMiniBoard(gameSize);
     showLives(P1);
     showLives(P2);
   }
@@ -210,9 +210,13 @@ const generateMiniBoard = (size) => {
     $("#my-field").append("<tr id=" + "myrow" + i + "></tr>")
     for (let j = 0; j < size; j++) {
       let locationMarker = alphabet[i] + String(j);
-      // console.log("placed, put", placedLocation, locationMarker)
-      if (P1.pieceLocations.includes(locationMarker)) {
+
+      if (P1.hitLocations.includes(locationMarker)) {
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> HIT </p></td>')
+      } else if (P1.pieceLocations.includes(locationMarker)) {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + P1.icon + ' </p></td>')
+      } else if (P1.missedLocations.includes(locationMarker)) {
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> MISS </p></td>')
       } else {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> &nbsp - &nbsp </p></td>')
       }
