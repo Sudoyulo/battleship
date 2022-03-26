@@ -105,10 +105,10 @@ const mapClickHandler = (e) => {
   if (gameStart) {
     aimCoords = $(e.target).parent().attr('id')
 
+    attackTurn(P1, P2, aimCoords)
     if (P2.hitLocations.length + P2.missedLocations.length !== 0) {
       attackTurn(P2, P1, randomSpot())
     }
-    attackTurn(P1, P2, aimCoords)
 
     refreshBoard();
     generateMiniBoard(gameSize);
@@ -300,7 +300,7 @@ const attackTurn = (player1, player2, location) => {
       player2.missedLocations.push(location)
     } else if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
       player2.missedLocations.push(location)
-    } else {
+    } else if (player1.name === "P2") {
       console.log("reattack")
       attackTurn(P2, P1, randomSpot())
     }
