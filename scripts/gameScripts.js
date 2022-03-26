@@ -212,11 +212,11 @@ const generateMiniBoard = (size) => {
       let locationMarker = alphabet[i] + String(j);
 
       if (P1.hitLocations.includes(locationMarker)) {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> HIT </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> 💥 </p></td>')
       } else if (P1.pieceLocations.includes(locationMarker)) {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> ' + P1.icon + ' </p></td>')
       } else if (P1.missedLocations.includes(locationMarker)) {
-        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> MISS </p></td>')
+        $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> 💨 </p></td>')
       } else {
         $("#myrow" + i).append('<td id="m' + locationMarker + '"><p class="mini-map"> &nbsp - &nbsp </p></td>')
       }
