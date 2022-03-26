@@ -161,7 +161,7 @@ const setWarning = (message) => {
   $("#warning").text(message)
   setTimeout(() => {
     $("#warning").text("")
-  }, 1000)
+  }, 2000)
 }
 
 const nextSizeMessage = () => {
