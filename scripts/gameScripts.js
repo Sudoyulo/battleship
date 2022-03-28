@@ -310,5 +310,8 @@ const attackTurn = (player1, player2, location) => {
 
   $(".hitcount-" + player1.name).text("Hits: " + player2.hitLocations.length)
 
+  if (player1.hitLocations.length === player2.pieceLocations.length) {
+    setWarning("Game over")
+  }
 
 }
