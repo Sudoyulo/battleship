@@ -294,6 +294,7 @@ const attackTurn = (player1, player2, location) => {
     if (player1.name === "P1") { setWarning("hit") }
     player2.hitLocations.push(location)
 
+
   } else {
     if (player1.name === "P1" && location !== undefined) {
       setWarning("miss")
@@ -306,5 +307,8 @@ const attackTurn = (player1, player2, location) => {
     }
 
   }
+
+  $(".hitcount-" + player1.name).text("Hits: " + player2.hitLocations.length)
+
 
 }
