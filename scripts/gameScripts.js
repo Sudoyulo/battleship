@@ -106,6 +106,7 @@ const mapClickHandler = (e) => {
     aimCoords = $(e.target).parent().attr('id')
 
     attackTurn(P1, P2, aimCoords)
+
     if (P2.hitLocations.length + P2.missedLocations.length !== 0) {
       attackTurn(P2, P1, randomSpot())
     }
@@ -309,7 +310,9 @@ const attackTurn = (player1, player2, location) => {
 
   $(".hitcount-" + player1.name).text("Hits: " + player2.hitLocations.length)
 
-  if (player1.hitLocations.length === player2.pieceLocations.length) {
+  console.log(player1.name + "hits", player2.hitLocations.length)
+
+  if (player2.hitLocations.length === player1.pieceLocations.length) {
     $("#title").text(player1.name + " wins")
     gameStart = false;
   }
