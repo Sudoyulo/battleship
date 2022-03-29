@@ -302,7 +302,6 @@ const attackTurn = (player1, player2, location) => {
     } else if (player1.name === "P2" && !player2.missedLocations.includes(location) && !player2.hitLocations.includes(location)) {
       player2.missedLocations.push(location)
     } else if (player1.name === "P2") {
-      console.log("reattack")
       attackTurn(P2, P1, randomSpot())
     }
 
@@ -311,7 +310,8 @@ const attackTurn = (player1, player2, location) => {
   $(".hitcount-" + player1.name).text("Hits: " + player2.hitLocations.length)
 
   if (player1.hitLocations.length === player2.pieceLocations.length) {
-    setWarning("Game over")
+    $("#title").text(player1.name + "wins")
+    gameStart = false;
   }
 
 }
