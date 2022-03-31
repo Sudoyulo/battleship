@@ -8,8 +8,9 @@ body {
 #scoreboard {
   background-color: lightblue;
   height: 35vh;
-  width: 70vw;
+  width: 69vw;
   margin-top: 10px;
+  padding: 10px;
 }
 
 #title {
