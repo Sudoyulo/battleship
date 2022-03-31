@@ -199,7 +199,7 @@ const refreshBoard = () => {
       $("#" + location).html(P2.icon).css({ background: "gainsboro" })
     })
     P2.missedLocations.forEach((location) => {
-      $("#" + location).html("X").css({ background: "gainsboro" })
+      $("#" + location).html("💨").css({ background: "gainsboro" })
     })
   }
 }
