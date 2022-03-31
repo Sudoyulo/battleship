@@ -72,7 +72,7 @@ const generateBoard = (size) => {
     height: 44 / size + "vh"
   })
   $(".mapPoint").css({
-    width: 31 / size + "vw",
+    width: 22 / size + "vw",
     height: 22 / size + "vh"
   })
 
