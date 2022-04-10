@@ -11,11 +11,13 @@ body {
   width: 69vw;
   margin-top: 10px;
   padding: 10px;
+  border-radius: 10px;
 }
 
 #title {
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .names {
@@ -60,6 +62,7 @@ p {
   background-color: gainsboro;
   height: 52vh;
   width: 70vw;
+  border-radius: 10px;
 }
 
 #grocery-aisle {
