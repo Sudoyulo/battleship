@@ -155,13 +155,13 @@ const validPlacement = (player, coords) => {
         } //done
       } else {
         if (player.name === "P1") {
-          setWarning("failed to add");
+          setWarning("Failed to add");
         }
         keepAdding = true;
       }
     } else {
       if (player.name === "P1") {
-        setWarning("tooshort");
+        setWarning("Too short");
       }
     }
   }
