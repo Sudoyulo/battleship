@@ -111,12 +111,12 @@ const mapClickHandler = (e) => {
       attackTurn(P2, P1, randomSpot());
     }
 
-    refreshBoard();
     generateMiniBoard(gameSize);
+    refreshBoard();
     showLives(P1);
     showLives(P2);
   }
-  aimCoords = "";
+  // aimCoords = "";
 };
 
 const validPlacement = (player, coords) => {
@@ -307,7 +307,9 @@ const showLives = (player1) => {
   let hitMiss = veggieList.map((section) => {
     let iconOrX = section.map((piece) => {
       if (player1.hitLocations.includes(piece)) {
-        return "X";
+        if ($("#easyMode").is(":checked")) {
+          return "X";
+        }
       }
       return player1.icon;
     });
